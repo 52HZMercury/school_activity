@@ -49,9 +49,11 @@
         <div class="com-notice">共有{{j.comments.length}}条评论</div>
         <div class="commends">
 <!--         只展示前三条-->
-          <div class="commend" v-for="k in j.comments" v-if="j.comments.indexOf(k) < 3">
+          <div class="commend" v-for="k in j.comments" :key="j.comments.indexOf(k)">
+            <div v-if="j.comments.indexOf(k) < 3">
             <span class="com-user">{{k.user.name}}:</span>
             <span class="com-text">{{k.commentText}}</span>
+            </div>
 <!--            <img src="../../assets/imgs/pick.png" alt="点赞">-->
           </div>
         </div>
