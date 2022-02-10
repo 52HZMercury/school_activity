@@ -10,64 +10,20 @@
       <hr>
     </div>
     <ul>
-      <!--    测试用的数据-->
-      <li class="home-card" v-for="i in testDatas">
-        <!--    左边-->
-        <span class="left">
-        <img src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" alt="">
-      </span>
-        <!--    右边-->
-        <span class="right">
-        <div class="username">{{i.username}} </div>
-        <div class="time">{{i.time}}</div>
-        <div class="tag">#{{i.tag}}#</div>
-        <div class="text">{{i.text}}</div>
-        <div class="text-imgs">
-           <img src="https://img1.baidu.com/it/u=2690253838,1695238456&fm=26&fmt=auto" alt="图片信息">
-        </div>
-          <!--      地点-->
-        <div class="position">{{i.position}}</div>
-          <!--      操作-->
-        <div class="options">
-          <div class="share" @click="share">
-            <img src="../../assets/imgs/share.png" alt="分享">
-            <span>分享</span>
-          </div>
-          <div class="commend">
-            <img src="../../assets/imgs/commend.png" alt="评论">
-            <span>{{i.commends.length}}</span>
-          </div>
-          <div class="pick" @click="pick(testDatas.indexOf(i),$event)">
-            <img src="../../assets/imgs/picked.png" alt="点赞" v-show="i.flag">
-            <img src="../../assets/imgs/pick.png" alt="点赞" v-show="!i.flag">
-            <span>{{i.pickCnt}}</span>
-          </div>
-        </div>
-          <!--      评论-->
-        <div class="com-notice">共有{{i.commends.length}}条评论</div>
-        <div class="commends">
-<!--         只展示前三条-->
-          <div class="commend" v-for="j in i.commends" v-if="i.commends.indexOf(j) < 3">
-            <span class="com-user">{{j.username}}:</span>
-            <span class="com-text">{{j.text}}</span>
-            <!--          <img src="../../assets/imgs/pick.png" alt="点赞">-->
-          </div>
-        </div>
-      </span>
-      </li>
+      
 
       <!--    正式使用的数据-->
-      <li class="home-card" v-for="j in filterCard">
+      <li class="home-card" v-for="j in filterCard" :key="filterCard.indexOf(j)">
         <!--    左边-->
         <span class="left">
-        <img :src="j.user.img" alt="头像">
+        <img src="https://img1.baidu.com/it/u=1092625551,3794324668&fm=26&fmt=auto" alt="头像">
       </span>
         <!--    右边-->
         <span class="right">
         <div class="username">{{j.user.name}}</div>
-        <div class="time">{{formatTime(j.time)}}</div>
+        <div class="time">{{formatTime(j.releasetime)}}</div>
         <div class="tag">#{{j.tag}}#</div>
-        <div class="text">{{j.text}}</div>
+        <div class="text">{{j.descriptiontext}}</div>
         <div class="text-imgs">
            <img :src="j.img" alt="图片信息">
         </div>
@@ -84,9 +40,9 @@
             <span>{{j.comments.length}}</span>
           </div>
           <div class="pick">
-<!--            <img src="../../assets/imgs/picked.png" alt="点赞">-->
-            <!--            <img src="../../assets/imgs/pick.png" alt="点赞" v-show="!i.flag">-->
-            <!--            <span>{{j.like}}</span>-->
+<!--            <img src="../../assets/imgs/picked.png" alt="点赞" v-show="j.flag==true">-->
+<!--            <img src="../../assets/imgs/pick.png" alt="点赞" v-show="j.flag==false">-->
+<!--            <span>{{j.like}}</span>-->
           </div>
         </div>
           <!--      评论-->
@@ -96,7 +52,7 @@
           <div class="commend" v-for="k in j.comments" v-if="j.comments.indexOf(k) < 3">
             <span class="com-user">{{k.user.name}}:</span>
             <span class="com-text">{{k.commentText}}</span>
-            <!--                      <img src="../../assets/imgs/pick.png" alt="点赞">-->
+<!--            <img src="../../assets/imgs/pick.png" alt="点赞">-->
           </div>
         </div>
       </span>
@@ -118,7 +74,7 @@ export default {
           tag:'失物招领',
           text:'思学楼a313哪位老兄的痔疮膏',
           position:'西南石油大学',
-          img:'https://img1.baidu.com/it/u=2690253838,1695238456&fm=26&fmt=auto',
+          img:'http://jepnmcuf.dnat.tech/img/dynamic/12.png',
           pickCnt:0,
           flag: false,
           commends:[
@@ -170,6 +126,7 @@ export default {
     this.$axios.get('/index').then((res) => {
       for(let i of res.data) {
         console.log(i)
+        i.img = 'http://jepnmcuf.dnat.tech/' + i.img
         this.data.push(i)
       }
     }).catch((err) => {
@@ -180,12 +137,11 @@ export default {
     filterCard() {
       const {input, data} = this
       let filterData = [...data]
-
       if(input.trim()) {
         filterData = this.data.filter((i) => {
           return (i.tag.indexOf(input) !== -1)
               || (i.user.name.indexOf(input) !== -1)
-              || (i.text.indexOf(input) !== -1)
+              || (i.descriptiontext.indexOf(input) !== -1)
         })
       }
       return filterData
