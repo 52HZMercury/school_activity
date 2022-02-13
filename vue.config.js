@@ -1,15 +1,25 @@
 module.exports = {
     devServer: {
         proxy: {
-            '/api': {
-                target: 'http://jepnmcuf.dnat.tech/',
+            '/back': {
+                target: 'http://47.96.119.233:8080/',
                 // 允许跨域
                 changeOrigin: true,
                 ws: true,
                 pathRewrite: {
-                    '^/api': ''
+                    '^/back': ''
                 }
-            }
+            },
+            '/yb': {
+                // 此处的写法，目的是为了 将 /api 替换成 https://www.baidu.com/
+                target: 'https://openapi.yiban.cn/data/download?access_token=f39cf499ff748823324c1875b704f4c615a95bae',
+                // 允许跨域
+                changeOrigin: true,
+                ws: true,
+                pathRewrite: {
+                    '^/yb': ''
+                }
+            },
         }
     }
 }

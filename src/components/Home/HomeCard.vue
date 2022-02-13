@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper">
     <div class="HomeTop">
       <img src="../../assets/imgs/homeImg.png" alt="HomeTop">
       <h2>易班信息平台</h2>
@@ -16,92 +16,99 @@
       <li class="home-card" v-for="j in filterCard" :key="filterCard.indexOf(j)">
         <!--    左边-->
         <span class="left">
-        <img src="https://img1.baidu.com/it/u=1092625551,3794324668&fm=26&fmt=auto" alt="头像">
-      </span>
+          <img :src="j.headImg" alt="头像">
+        </span>
         <!--    右边-->
-        <span class="right">
-        <div class="username">{{j.user.name}}</div>
-        <div class="time">{{formatTime(j.releasetime)}}</div>
-        <div class="tag">#{{j.tag}}#</div>
-        <div class="text">{{j.descriptiontext}}</div>
-        <div class="text-imgs">
-           <img :src="j.img" alt="图片信息">
-        </div>
+        <span class="right" @click="moreInfo(j)">
+          <div class="username">{{j.user.name}}</div>
+          <div class="time">{{formatTime(j.releasetime)}}</div>
+          <div class="tag">#{{j.tag}}#</div>
+          <div class="text">{{j.descriptiontext}}</div>
+          <div class="text-imgs">
+            <img :src="j.img" alt="图片信息">
+          </div>
           <!--      地点-->
           <!--        <div class="position">{{}}</div>-->
           <!--      操作-->
-        <div class="options">
-          <div class="share" @click="share">
-            <img src="../../assets/imgs/share.png" alt="分享">
-            <span>分享</span>
-          </div>
-          <div class="commend">
-            <img src="../../assets/imgs/commend.png" alt="评论">
-            <span>{{j.comments.length}}</span>
-          </div>
-          <div class="pick">
-<!--            <img src="../../assets/imgs/picked.png" alt="点赞" v-show="j.flag==true">-->
-<!--            <img src="../../assets/imgs/pick.png" alt="点赞" v-show="j.flag==false">-->
-<!--            <span>{{j.like}}</span>-->
-          </div>
-        </div>
-          <!--      评论-->
-        <div class="com-notice">共有{{j.comments.length}}条评论</div>
-        <div class="commends">
-<!--         只展示前三条-->
-          <div class="commend" v-for="k in j.comments" :key="j.comments.indexOf(k)">
-            <div v-if="j.comments.indexOf(k) < 3">
-            <span class="com-user">{{k.user.name}}:</span>
-            <span class="com-text">{{k.commentText}}</span>
+          <div class="options">
+            <div class="share" @click="share">
+              <img src="../../assets/imgs/share.png" alt="分享">
+              <span>分享</span>
             </div>
-<!--            <img src="../../assets/imgs/pick.png" alt="点赞">-->
+            <div class="commend">
+              <img src="../../assets/imgs/commend.png" alt="评论">
+              <span>{{j.comments.length}}</span>
+            </div>
+            <div class="pick">
+  <!--            <img src="../../assets/imgs/picked.png" alt="点赞" v-show="j.flag==true">-->
+  <!--            <img src="../../assets/imgs/pick.png" alt="点赞" v-show="j.flag==false">-->
+  <!--            <span>{{j.like}}</span>-->
+            </div>
           </div>
-        </div>
-      </span>
+            <!--      评论-->
+          <div class="com-notice">共有{{j.comments.length}}条评论</div>
+          <div class="commends">
+  <!--         只展示前三条-->
+            <div class="commend" v-for="k in j.comments" :key="j.comments.indexOf(k)">
+              <div v-if="j.comments.indexOf(k) < 3">
+              <span class="com-user">{{k.user.name}}:</span>
+              <span class="com-text">{{k.commentText}}</span>
+              </div>
+  <!--            <img src="../../assets/imgs/pick.png" alt="点赞">-->
+            </div>
+          </div>
+        </span>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 export default {
   name: "HomeCard",
   data () {
     return {
+      baseUrl: 'http://47.96.119.233:8080/',
       input: '',
-      data:[],
-      testDatas:[
-        { username:'张三',
-          time:'2021-10-11',
-          tag:'失物招领',
-          text:'思学楼a313哪位老兄的痔疮膏',
-          position:'西南石油大学',
-          img:'http://jepnmcuf.dnat.tech/img/dynamic/12.png',
-          pickCnt:0,
-          flag: false,
-          commends:[
-            {
-              username:'李子明',
-              text:'哈哈哈哈哈'
-            },
-            {
-              username:'张三',
-              text:'牛逼，哈哈哈哈哈哈哈'
-            },
-            {
-              username:'李四',
-              text: '你是真滴厉害啊'
-            },
-            {
-              username:'陈宁',
-              text:'这不是我的痔疮膏吗'
-            }
-          ]
-        }
-      ]
+      data:[
+        // // 样本数据
+        // { 
+        //   username:'张三',
+        //   time:'2021-10-11',
+        //   tag:'失物招领',
+        //   text:'思学楼a313哪位老兄的痔疮膏',
+        //   position:'西南石油大学',
+        //   img:'http://jepnmcuf.dnat.tech/img/dynamic/12.png',
+        //   pickCnt:0,
+        //   flag: false,
+        //   commends:[
+        //     {
+        //       username:'李子明',
+        //       text:'哈哈哈哈哈'
+        //     },
+        //     {
+        //       username:'张三',
+        //       text:'牛逼，哈哈哈哈哈哈哈'
+        //     },
+        //     {
+        //       username:'李四',
+        //       text: '你是真滴厉害啊'
+        //     },
+        //     {
+        //       username:'陈宁',
+        //       text:'这不是我的痔疮膏吗'
+        //     }
+        //   ]
+        // }
+      ] 
     }
   },
   methods:{
+    ...mapMutations(['activedId']),
+    share () {
+      console.log('ceshi')
+    },
     pick (index, event) {
       if(!this.testDatas[index].flag)
         this.testDatas[index].pickCnt ++
@@ -109,10 +116,7 @@ export default {
         this.testDatas[index].pickCnt --
       this.testDatas[index].flag = !this.testDatas[index].flag
     },
-    share () {
-      alert('测试')
-    },
-    formatTime(timeStamp)
+    formatTime (timeStamp)
     {
       let time = new Date(timeStamp),
           y = time.getFullYear(),
@@ -122,13 +126,23 @@ export default {
           mm = time.getMinutes(),
           s = time.getSeconds()
       return y+'-'+m+'-'+d+' '+h+':'+mm+':'+s
+    },
+    moreInfo (targetObj) {
+      console.log(targetObj.id)
+      this.activedId({
+          id: targetObj.id,
+          index: this.data.indexOf(targetObj)
+      })
+      console.log('store:', this.$store.state.info)
+      this.$router.push('/info')
     }
   },
   mounted() {
-    this.$axios.get('/index').then((res) => {
+    this.$axios.get('/back/index').then((res) => {
       for(let i of res.data) {
+        i.img = this.baseUrl + i.img,
+        i.headImg = this.baseUrl + i.user.headImg
         console.log(i)
-        i.img = 'http://jepnmcuf.dnat.tech/' + i.img
         this.data.push(i)
       }
     }).catch((err) => {
@@ -153,6 +167,10 @@ export default {
 </script>
 
 <style scoped>
+  * {
+    margin: 0;
+    padding: 0;
+  }
 /*一级*/
  .home-card{
    display: flex;
