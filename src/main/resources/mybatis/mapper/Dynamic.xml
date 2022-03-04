@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lostandfound.mapper.DynamicMapper">
+
+    <select id="queryDynamicList" resultMap="DynamicAndComments">
+        select * from  dynamic
+    </select>
+
+    <resultMap id="DynamicAndComments" type="Dynamic">
+        <result property="id" column="id"/>
+        <association property="user" javaType="User" select="getUser" column="userId"/>
+        <collection property="comments" javaType="ArrayList" ofType="comment" select="getComments" column="id"/>
+    </resultMap>
+
+    <select id="getUser" resultType="User">
+        select * from user where id = #{id}
+    </select>
+
+    <resultMap id="userAndComments" type="comment">
+        <association property="user" javaType="User" select="getUser" column="userId"/>
+    </resultMap>
+
+    <select id="getComments" resultMap="userAndComments">
+        select * from comments where dynamicId = #{id}
+    </select>
+
+
+    <insert id="addDynamic" parameterType="Dynamic">
+        insert into dynamic (userId,releasetime,invisible,tag,descriptiontext,img,likes) values (#{user.id},Now(),#{invisible},#{tag},#{descriptiontext},#{img},#{likes})
+    </insert>
+
+    <insert id="releaseComments" parameterType="comment">
+        insert into comments(dynamicId,userId,commentText) values ( #{dynamicId},#{user.id},#{commentText})
+    </insert>
+
+    <update id="upDateLikes" parameterType="int">
+        update dynamic set likes = #{likes} where id =#{id}
+    </update>
+
+    <update id="addDynamicImgclasspath">
+        update  dynamic set img = #{classpath} where userId= #{uid} AND descriptiontext=#{dtext} AND tag=#{dtag}
+    </update>
+
+
+</mapper>
