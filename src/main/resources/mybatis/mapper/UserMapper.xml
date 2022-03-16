@@ -13,7 +13,7 @@
         select * from user where Id = #{Id};
     </select>
 
-    <select id="queryUserListById" resultType="User">
+    <select id="loadUserMessage" resultType="User">
         select * from user where id = #{id}
     </select>
 

@@ -19,4 +19,11 @@ public class User {
     private int id;
     private String password;
     private String headImg;
+    private int dynamicSum;
+    private int likesSum;
+    private String qqnum;
+    private String telnum;
+    private String introduction;
+
+
 }

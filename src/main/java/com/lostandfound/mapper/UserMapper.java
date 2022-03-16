@@ -17,9 +17,13 @@ public interface UserMapper {
 
     User loadUserByUserId(int id);
 
+    User loadUserMessage(int id);//查询用户的信息
+
     int addUser(User user);
 
     int upDateUser(User user);
 
     int deleteUser(String id);
+
+
 }

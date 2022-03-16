@@ -17,14 +17,20 @@ public class UserService {
       @Autowired
       private UserMapper userMapper;
 
-
+      //用户登录
       public User doLogin(int id ,String password) {
 
         User user = userMapper.loadUserByUserId(id);
         if (user == null || !user.getPassword().equals(password)) {
             return null;
         }
+
         return user;
 
+    }
+
+    //用户自己的相关信息
+    public User loadUsermessage(int id){
+           return   userMapper.loadUserMessage(id);
     }
 }
