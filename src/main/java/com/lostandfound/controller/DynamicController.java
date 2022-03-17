@@ -34,14 +34,16 @@ public class DynamicController {
 
     @PostMapping("/add")
     @ApiOperation("增加动态的控制器 " +
-                  "在发布的时候，评论集合传个空值就行，user只需要传userid就行，其他两个参数可以为空，动态的id和动态发布时间也传空值")
+                  "在发布的时候，评论集合传个空值就行，user不用传，但是用户一定要先登录，其他两个参数可以为空，动态的id和动态发布时间也传空值,若是增加失物招领的信息，售价那些信息都不填，传null")
     public void add_dynamic(@RequestBody Dynamic dynamic, HttpServletRequest request){
-       dynamicService.doAddDynamic(dynamic);
-
         HttpSession session = request.getSession();
+
+        dynamic.getUser().setId((int)session.getAttribute("loginUserId"));
+        dynamicService.doAddDynamic(dynamic);
+
+
         session.setAttribute("uid",dynamic.getUser().getId());
 
-        System.out.println(session.getId() +" "+session.getAttribute("uid"));
 
        session.setAttribute("dtext",dynamic.getDescriptiontext());
        session.setAttribute("dtag",dynamic.getTag());

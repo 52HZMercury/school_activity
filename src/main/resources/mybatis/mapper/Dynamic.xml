@@ -29,7 +29,7 @@
 
 
     <insert id="addDynamic" parameterType="Dynamic">
-        insert into dynamic (userId,releasetime,invisible,tag,descriptiontext,img,likes) values (#{user.id},Now(),#{invisible},#{tag},#{descriptiontext},#{img},#{likes})
+        insert into dynamic (userId,releasetime,invisible,tag,descriptiontext,img,likes,buyORsale,brand,quality,originalPrice,sellPrice,ISbargain) values (#{user.id},Now(),#{invisible},#{tag},#{descriptiontext},#{img},#{likes},#{buyORsale},#{brand},#{quality},#{originalPrice},#{sellPrice},#{ISbargain})
     </insert>
 
     <insert id="releaseComments" parameterType="comment">
