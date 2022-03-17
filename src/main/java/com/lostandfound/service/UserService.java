@@ -54,5 +54,9 @@ public class UserService {
           return userMapper.addNewUerId();
     }
 
+    //用户修改个人信息
+    public void doAlter(User upuser){
+          userMapper.upDateUser(upuser);
+    }
 
 }

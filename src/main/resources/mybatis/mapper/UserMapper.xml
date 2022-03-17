@@ -29,7 +29,7 @@
     </select>
 
     <update id="upDateUser" parameterType="User">
-        update user set name =#{name}, password = #{password} ,type = #{type} where id =#{id}
+        update user set name =#{name}, password = #{password} ,qqnum = #{qqnum},telnum = #{telnum} ,introduction = #{introduction} where id =#{id}
     </update>
 
 

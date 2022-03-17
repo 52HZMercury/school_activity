@@ -1,16 +1,13 @@
 package com.lostandfound.controller;
 
 
+import com.lostandfound.pojo.Dynamic;
 import com.lostandfound.pojo.User;
 import com.lostandfound.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,5 +32,11 @@ public class UserController {
           return userService.loadUsermessage((int)session.getAttribute("loginUserId"));
     }
 
+    @PostMapping("/userAlter")
+    @ApiOperation("用户修改自己的个人信息,这里也需要登录后才能修改，这里只提供name password qqnum telnum introduction的修改，其他数值传空")
+    public void alterUserMessage(@RequestBody User upuser,HttpSession session){
+        upuser.setId((int)session.getAttribute("loginUserId"));
+        userService.doAlter(upuser);
+    }
 
 }
