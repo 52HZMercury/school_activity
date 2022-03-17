@@ -5,6 +5,9 @@
 
 <mapper namespace="com.lostandfound.mapper.DynamicMapper">
 
+
+<!--多表查询的-->
+
     <select id="queryDynamicList" resultMap="DynamicAndComments">
         select * from  dynamic
     </select>
@@ -26,6 +29,34 @@
     <select id="getComments" resultMap="userAndComments">
         select * from comments where dynamicId = #{id}
     </select>
+
+
+<!--根据tag来多表查询-->
+
+    <select id="loadDynamicByTag" resultMap="DynamicAndComments">
+        select * from  dynamic where tag = #{tag}
+    </select>
+
+
+<!--    <resultMap id="DynamicAndComments" type="Dynamic">-->
+<!--        <result property="id" column="id"/>-->
+<!--        <association property="user" javaType="User" select="getUser" column="userId"/>-->
+<!--        <collection property="comments" javaType="ArrayList" ofType="comment" select="getComments" column="id"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="getUser" resultType="User">-->
+<!--        select * from user where id = #{id}-->
+<!--    </select>-->
+
+<!--    <resultMap id="userAndComments" type="comment">-->
+<!--        <association property="user" javaType="User" select="getUser" column="userId"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="getComments" resultMap="userAndComments">-->
+<!--        select * from comments where dynamicId = #{id}-->
+<!--    </select>-->
+
+
 
 
     <insert id="addDynamic" parameterType="Dynamic">

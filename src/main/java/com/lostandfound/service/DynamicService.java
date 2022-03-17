@@ -53,5 +53,9 @@ public class DynamicService {
         dynamicMapper.addDynamicImgclasspath(classpath,uid,dtext,dtag);
     }
 
+    public List<Dynamic> loadtagDynamic(String tag){
+        return dynamicMapper.loadDynamicByTag(tag);
+    }
+
 
 }

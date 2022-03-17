@@ -25,4 +25,5 @@ public interface DynamicMapper {
 
     void addDynamicImgclasspath(String classpath,int uid,String dtext,String dtag);
 
+    List<Dynamic> loadDynamicByTag(String tag);
 }

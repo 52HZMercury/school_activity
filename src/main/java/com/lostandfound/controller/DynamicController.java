@@ -50,8 +50,9 @@ public class DynamicController {
     }
 
     @PostMapping("/releaseComment")
-    @ApiOperation("发表评论控制器")
-    public void add_comment(@RequestBody Comment comment){
+    @ApiOperation("发表评论控制器,登陆后后台会自动获取这个用户的id进行对应，所以用户需要先登录才能发表评论")
+    public void add_comment(@RequestBody Comment comment,HttpSession sessiom){
+        comment.getUser().setId((int)sessiom.getAttribute("loginUserId"));
         dynamicService.doReleaseComments(comment);
     }
 
@@ -59,5 +60,12 @@ public class DynamicController {
     @ApiOperation("对点赞数进行更新")
     public void updatelikes(int likes , int dynamicId){
         dynamicService.updateLikes(likes,dynamicId);
+    }
+
+
+    @GetMapping({"/tagDynamic"})
+    @ApiOperation("根据动态的类型加载数据")
+    public List<Dynamic> loadDynamicBytag(String tag){
+        return dynamicService.loadtagDynamic(tag);
     }
 }
