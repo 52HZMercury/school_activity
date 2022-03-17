@@ -39,11 +39,16 @@ public class UserService {
          User UserIndex = userMapper.loadUserMessage(id);
          //查询该用户的全部点赞信息并相加获得该用户的点赞总数
         int likestotal = 0;
+        int dynamictotal = 0;
         for (Dynamic tempdynamic:dynamicMapper.queryDynamicListByUserid(id)
              ) {
             likestotal +=   tempdynamic.getLikes();
+            dynamictotal += 1;
         }
          UserIndex.setLikesSum(likestotal);
+         UserIndex.setDynamicSum(dynamictotal);
+         userMapper.updataUsersum(dynamictotal,likestotal,id);
+
          return   UserIndex;
     }
 

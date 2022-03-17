@@ -30,4 +30,5 @@ public interface DynamicMapper {
 
     //加载指定用户的动态信息
     List<Dynamic> queryDynamicListByUserid(int id);
+
 }

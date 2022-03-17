@@ -32,8 +32,12 @@
         update user set name =#{name}, password = #{password} ,qqnum = #{qqnum},telnum = #{telnum} ,introduction = #{introduction} where id =#{id}
     </update>
 
+    <update id="updataUsersum" parameterType="int">
+        update user set dynamicSum =#{dsum}, likesSum = #{lsum}  where id =#{id}
+    </update>
 
     <delete id="deleteUser" parameterType="String">
         delete from user where id = #{id}
     </delete>
+
 </mapper>

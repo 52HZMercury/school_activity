@@ -25,6 +25,8 @@ public interface UserMapper {
 
     int upDateUser(User user);
 
+    int updataUsersum(int dsum,int lsum,int id);
+
     int deleteUser(String id);
 
 
