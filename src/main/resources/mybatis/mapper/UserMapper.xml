@@ -17,9 +17,16 @@
         select * from user where id = #{id}
     </select>
 
-    <insert id="addUser" parameterType="User">
-        insert into user (id,name,password) values (#{id},#{name},#{password})
+
+<!--添加一个值并返回自增id-->
+
+    <insert id="addUser" parameterType="User" >
+        insert into user (name,password) values (#{name},#{password})
     </insert>
+
+    <select id="addNewUerId" resultType="int">
+        SELECT LAST_INSERT_ID() AS USERId
+    </select>
 
     <update id="upDateUser" parameterType="User">
         update user set name =#{name}, password = #{password} ,type = #{type} where id =#{id}

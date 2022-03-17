@@ -19,7 +19,9 @@ public interface UserMapper {
 
     User loadUserMessage(int id);//查询用户的信息
 
-    int addUser(User user);
+    void addUser(User user);
+
+    int addNewUerId();
 
     int upDateUser(User user);
 

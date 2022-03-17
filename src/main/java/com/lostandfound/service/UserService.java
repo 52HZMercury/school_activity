@@ -46,4 +46,13 @@ public class UserService {
          UserIndex.setLikesSum(likestotal);
          return   UserIndex;
     }
+
+
+    //用户注册
+    public int doreg(User user){
+          userMapper.addUser(user);
+          return userMapper.addNewUerId();
+    }
+
+
 }
