@@ -16,7 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     //配置映射路径，使得前端可以访问文件的地址
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/img/**").addResourceLocations("file:D:/文档/新鲜出炉的程序/SpringBoot/LostandFound/src/main/resources/LostandFoundimg/");
+        registry.addResourceHandler("/img/**").addResourceLocations("file:/www/wwwroot/LostandFound/backgroundSystem/lostandfoundimg/");
     }
     //D:\文档\新鲜出炉的程序\SpringBoot\LostandFound\src\main\resources\LostandFoundimg
     // linux  /www/wwwroot/LostandFound/backgroundSystem/lostandfoundimg/
