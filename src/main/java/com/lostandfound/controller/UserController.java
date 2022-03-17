@@ -27,7 +27,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping({"/userindex"})
-    @ApiOperation("一进入这个首页，就会加载数据里面的失物招领的信息")
+    @ApiOperation("首先要登录，然后才会有对应的登录信息，才可以进行这一步的操作")
     public User loadusermessage(HttpSession session){
           return userService.loadUsermessage((int)session.getAttribute("loginUserId"));
     }
