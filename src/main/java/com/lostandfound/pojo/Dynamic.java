@@ -55,14 +55,14 @@ public class Dynamic {
     @ApiModelProperty("商品的品牌")
     private  String brand;
 
-    @ApiModelProperty("商品的成色，这里使用int数值1-9表示成色")
+    @ApiModelProperty("商品的成色，这里使用int数值1-5表示成色")
     private  int quality;
 
     @ApiModelProperty("商品的原价")
-    private  double originalPrice;
+    private  String originalPrice;
 
     @ApiModelProperty("商品售价")
-    private  double sellPrice;
+    private  String  sellPrice;
 
     @ApiModelProperty("是否砍价")
     private boolean ISbargain;
