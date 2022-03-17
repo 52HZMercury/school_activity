@@ -26,7 +26,7 @@ public class DynamicController {
     private DynamicService dynamicService;
 
     @GetMapping({"/index","/"})
-    @ApiOperation("一进入这个首页，就会加载数据里面的失物招领的信息")
+    @ApiOperation("一进入这个首页，就会加载数据里面所有的动态的信息")
     public List<Dynamic> loadDynamic(){
         return dynamicService.loadAllDynamic();
     }

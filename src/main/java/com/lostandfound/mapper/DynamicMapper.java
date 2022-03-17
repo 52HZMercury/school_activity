@@ -26,4 +26,8 @@ public interface DynamicMapper {
     void addDynamicImgclasspath(String classpath,int uid,String dtext,String dtag);
 
     List<Dynamic> loadDynamicByTag(String tag);
+
+
+    //加载指定用户的动态信息
+    List<Dynamic> queryDynamicListByUserid(int id);
 }

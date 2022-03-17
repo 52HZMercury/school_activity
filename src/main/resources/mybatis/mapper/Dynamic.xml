@@ -56,7 +56,9 @@
 <!--        select * from comments where dynamicId = #{id}-->
 <!--    </select>-->
 
-
+    <select id="queryDynamicListByUserid" parameterType="int" resultType="Dynamic">
+        select * from  dynamic  WHERE userId = #{id}
+    </select>
 
 
     <insert id="addDynamic" parameterType="Dynamic">

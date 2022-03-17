@@ -1,6 +1,8 @@
 package com.lostandfound.service;
 
+import com.lostandfound.mapper.DynamicMapper;
 import com.lostandfound.mapper.UserMapper;
+import com.lostandfound.pojo.Dynamic;
 import com.lostandfound.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class UserService {
       @Autowired
       private UserMapper userMapper;
 
+      @Autowired
+      private DynamicMapper dynamicMapper;
+
       //用户登录
       public User doLogin(int id ,String password) {
 
@@ -31,6 +36,14 @@ public class UserService {
 
     //用户自己的相关信息
     public User loadUsermessage(int id){
-           return   userMapper.loadUserMessage(id);
+         User UserIndex = userMapper.loadUserMessage(id);
+         //查询该用户的全部点赞信息并相加获得该用户的点赞总数
+        int likestotal = 0;
+        for (Dynamic tempdynamic:dynamicMapper.queryDynamicListByUserid(id)
+             ) {
+            likestotal +=   tempdynamic.getLikes();
+        }
+         UserIndex.setLikesSum(likestotal);
+         return   UserIndex;
     }
 }
