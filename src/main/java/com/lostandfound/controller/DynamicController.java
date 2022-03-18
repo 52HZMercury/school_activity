@@ -41,10 +41,7 @@ public class DynamicController {
         dynamic.getUser().setId((int)session.getAttribute("loginUserId"));
         dynamicService.doAddDynamic(dynamic);
 
-
         session.setAttribute("uid",dynamic.getUser().getId());
-
-
        session.setAttribute("dtext",dynamic.getDescriptiontext());
        session.setAttribute("dtag",dynamic.getTag());
     }
@@ -68,4 +65,12 @@ public class DynamicController {
     public List<Dynamic> loadDynamicBytag(String tag){
         return dynamicService.loadtagDynamic(tag);
     }
+
+
+    @PostMapping("/updateDynamic")
+    @ApiOperation("用于修改动态的相关内容或者添加详细信息")
+    public void update_dynamic(@RequestBody Dynamic dynamic){
+         dynamicService.updateDynamic(dynamic);
+    }
+
 }

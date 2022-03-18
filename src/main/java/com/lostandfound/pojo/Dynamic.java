@@ -40,7 +40,7 @@ public class Dynamic {
     @ApiModelProperty("用户的描述文本")
     private String descriptiontext;
 
-    @ApiModelProperty("保存的图片的信息")
+    @ApiModelProperty("保存的图片的位置信息")
     private String img;
 
     @ApiModelProperty("该条动态的点赞数")
@@ -54,6 +54,9 @@ public class Dynamic {
 
     @ApiModelProperty("商品的品牌")
     private  String brand;
+
+    @ApiModelProperty("商品型号")
+    private  String xingHao;
 
     @ApiModelProperty("商品的成色，这里使用int数值1-5表示成色")
     private  int quality;

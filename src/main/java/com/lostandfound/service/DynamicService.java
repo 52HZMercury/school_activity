@@ -58,4 +58,9 @@ public class DynamicService {
     }
 
 
+    public void updateDynamic(Dynamic dynamic){
+         dynamic.setId(dynamicMapper.addNewDId());
+         dynamicMapper.updatedynamic(dynamic);
+    }
+
 }
