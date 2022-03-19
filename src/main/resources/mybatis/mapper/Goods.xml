@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lostandfound.mapper.GoodsMapper">
+
+    <select id="queryAllgoodslistByuserId" resultType="Goods">
+        select * from  goods where userId = #{userId}
+    </select>
+
+
+
+    <insert id="add_goods" parameterType="Goods" >
+        insert into goods (userId,brand,xingHao,quality,originalPrice,sellPrice,ISbargain) values (#{userId},#{brand},#{xingHao},#{quality},#{originalPrice},#{sellPrice},#{ISbargain})
+    </insert>
+
+
+    <delete id="deletegoods" parameterType="int">
+        delete from goods where id = #{id}
+    </delete>
+
+</mapper>
