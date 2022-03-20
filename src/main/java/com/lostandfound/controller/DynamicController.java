@@ -38,7 +38,9 @@ public class DynamicController {
     public void add_dynamic(@RequestBody Dynamic dynamic, HttpServletRequest request){
         HttpSession session = request.getSession();
 
+
         dynamic.getUser().setId((int)session.getAttribute("loginUserId"));
+
         dynamicService.doAddDynamic(dynamic);
 
         session.setAttribute("uid",dynamic.getUser().getId());
