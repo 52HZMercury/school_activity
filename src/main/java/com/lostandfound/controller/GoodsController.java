@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -35,8 +36,8 @@ public class GoodsController {
 
     @PostMapping("/getgoods")
     @ApiOperation("获取用户购物车里面的全部信息")
-    public List<Goods> getuserAllGoods(int userId) {
-        return goodsService.queryAllgoodslistByuserId(userId);
+    public List<Goods> getuserAllGoods(HttpSession session) {
+        return goodsService.queryAllgoodslistByuserId((int)session.getAttribute("loginUserId"));
     }
 
     @PostMapping("/deletegoods")
