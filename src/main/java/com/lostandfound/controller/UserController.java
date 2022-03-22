@@ -33,10 +33,17 @@ public class UserController {
     }
 
     @PostMapping("/userAlter")
-    @ApiOperation("用户修改自己的个人信息,这里也需要登录后才能修改，这里只提供name password qqnum telnum introduction的修改，其他数值传空")
+    @ApiOperation("用户修改自己的个人信息,这里也需要登录后才能修改，这里只提供name  qqnum telnum introduction的修改，其他数值传空")
     public void alterUserMessage(@RequestBody User upuser,HttpSession session){
         upuser.setId((int)session.getAttribute("loginUserId"));
         userService.doAlter(upuser);
+    }
+
+    @PostMapping("/userPasswordAlter")
+    @ApiOperation("用户修改自己的个人信息,这里也需要登录后才能修改，这里只提供password的修改，其他数值传空")
+    public void alterUserpassword(@RequestBody User upuser,HttpSession session){
+        upuser.setId((int)session.getAttribute("loginUserId"));
+        userService.doAlterpassword(upuser);
     }
 
 }

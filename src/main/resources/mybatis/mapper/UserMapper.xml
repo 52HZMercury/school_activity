@@ -29,7 +29,13 @@
     </select>
 
     <update id="upDateUser" parameterType="User">
-        update user set name =#{name}, password = #{password} ,qqnum = #{qqnum},telnum = #{telnum} ,introduction = #{introduction} where id =#{id}
+        update user set name =#{name}, qqnum = #{qqnum},telnum = #{telnum} ,introduction = #{introduction} where id =#{id}
+    </update>
+
+
+
+    <update id="upDateUserpassword" parameterType="User">
+        update user set password = #{password} where id =#{id}
     </update>
 
     <update id="updataUsersum" parameterType="int">

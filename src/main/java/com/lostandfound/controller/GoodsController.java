@@ -35,7 +35,7 @@ public class GoodsController {
     }
 
     @PostMapping("/getgoods")
-    @ApiOperation("获取用户购物车里面的全部信息")
+    @ApiOperation("获取用户购物车里面的全部信息，这里不需要填写其他信息，只需要登录后请求就行，userid后台获取")
     public List<Goods> getuserAllGoods(HttpSession session) {
         return goodsService.queryAllgoodslistByuserId((int)session.getAttribute("loginUserId"));
     }

@@ -64,4 +64,8 @@ public class UserService {
           userMapper.upDateUser(upuser);
     }
 
+    public void  doAlterpassword(User upuser){
+        userMapper.upDateUserpassword(upuser);
+    }
+
 }
