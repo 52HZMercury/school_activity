@@ -1,8 +1,19 @@
 <template>
   <div id="app">   
-      <router-view/>
+      <!-- <router-view/> -->
+      <AllMain></AllMain>
   </div>
 </template>
+
+<script>
+import secondHand from './views/secondHand.vue'
+import AllMain from './views/AllMain.vue'
+export default{
+  name: 'App',
+  components: { AllMain },
+}
+
+</script>
 
 <style>
 /* *{

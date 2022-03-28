@@ -22,11 +22,39 @@
           <van-icon class="logo" name="photo-o" size="40" />
           <br />
           点击上传图片
-          <input type="file" class="inputImg" @change="getFile($event)">
+          <input type="file" class="inputImg" @change="getFile($event)" accept=".jpg,.png,.jepg">
           
         </div>
        <img class = "imgChoosed" :src="src" @click="changeImg">
     </div>
+
+        <!-- 大Tag -->
+    <div class="sellTagChoose">
+      <div>
+        <van-icon name="chat" color="#ffcba5" />
+        <span>二手交易需完善商品信息~</span>
+        <van-icon name="arrow" />
+      </div>
+
+      <hr />
+
+      <div class="tagChoose">
+        <!-- <van-button
+          class="tagbtn"
+          round
+          color="#ffd7db"
+          type="primary"
+          size="small"
+          @click="tagChoose(item)"
+          v-for="(item, i) in mainTag"
+          :key="i"
+          >{{ item }}</van-button
+        > -->
+
+        <button @click="mainTagChoosed" class="sellStyle" >立即交易</button>
+      </div>
+    </div>
+
 
     <!-- 话题（选择+自定义） -->
     <div class="info-containner">
@@ -80,6 +108,39 @@
     >
       发布
     </van-button>
+
+<!-- 暂时用来跳转 记得删掉 -->
+    <van-button
+      class="releasebtn"
+      color="linear-gradient(to right, #ffbab0, #ffd7db)"
+      block
+      round
+      @click="jump"
+    >
+      跳转
+    </van-button>
+    <!-- <van-button
+      class="releasebtn"
+      color="linear-gradient(to right, #ffbab0, #ffd7db)"
+      block
+      round
+      @click="jumpToLogin"
+    >
+      跳转到登录
+    </van-button>
+
+     <van-button
+      class="releasebtn"
+      color="linear-gradient(to right, #ffbab0, #ffd7db)"
+      block
+      round
+      @click="jumpToResetPsw"
+    >
+      跳转到修改密码
+    </van-button> -->
+
+  
+    
   </div>
 </template>
 
@@ -90,7 +151,7 @@ export default {
   data() {
     return {
       src:"",
-      btntext: ["#校园卡", "#钥匙", "#练习册", "#书包"],
+      btntext: ["#求助咨询", "#失物招领", "#随便聊聊"],
       releasetext: "", //发布内容正文
       hide: true, //是否隐身
       settag: "", //话题
@@ -120,6 +181,11 @@ export default {
     // 返回
     onClickLeft() {
         this.$router.go(-1)
+    },
+
+    mainTagChoosed(){
+      this.settag = '#二手闲置'
+      // this.$router.push('')
     },
 
     // 选择tag
@@ -156,6 +222,8 @@ export default {
     },
 
     release() {
+
+      this.users = this.$store.state.userMsg
       
       let Data = {
         comments: [],
@@ -176,18 +244,27 @@ export default {
       console.log(this.file);
       console.log(formData);
 
-
-        this.$axios.post("/back/add",Data).then((res)=>{
-          console.log(res);
-          if(res.status!== 200){
-            alert("发表动态失败")
-          }
-        })
-        this.$axios.post("/back/fileload",formData).then(function(res){
-              console.log(res);
-        })
-        
+      this.$axios.post("/back/add",Data).then((res)=>{
+        console.log(res);
+        if(res.status!== 200){
+          alert("发表动态失败")
+        }
+      })
+      this.$axios.post("/back/fileload",formData).then(function(res){
+            console.log(res);
+      })
     },
+
+  // 记得删！！！！
+    jump(){
+      this.$router.push('/revamp')
+    },
+    jumpToLogin(){
+      this.$router.push('/login')
+    },
+    jumpToResetPsw(){
+      this.$router.push('/resetpsw')
+    }
   },
 };
 </script>
@@ -204,24 +281,46 @@ export default {
 }
 
 .photo-containner {
-  background-color: rgb(236, 236, 236);
-  height: 200px;
+  background-color: #f5f4f4;
+  height: 220px;
   margin: 20px 20px 5% 5%;
   padding: 5%;
 }
 .texts {
   color: gray;
-  background-color: rgb(236, 236, 236);
+  background-color: #f5f4f4;
 }
 .photo-count {
   color: gray;
 }
 
 .info-containner {
-  background-color: rgb(236, 236, 236);
+  background-color: #f5f4f4;
   margin: 20px 20px 5% 5%;
-  height: 200px;
+  height: 160px;
   padding: 5%;
+}
+
+.sellTagChoose {
+  // background-color: rgb(236, 236, 236);
+  margin: 20px 20px 5% 5%;
+  height: 110px;
+  padding: 5%;
+  text-align:center;
+}
+
+.sellStyle{
+  width:85px;
+  height:85px;
+  border-radius:50%;
+  color:white;
+  background:linear-gradient(150deg,#FCEBEB, #FFC8CE,  #FFECD6);
+  font-size:18px;
+  margin:1%;
+  border:none;
+  border-bottom:2px solid #DAB6B6;
+  padding:2px;
+
 }
 
 .self-set {
@@ -229,25 +328,33 @@ export default {
 }
 .tagbtn {
   margin-left: 2%;
+  border-bottom:2px solid #DBAAAA;
 }
 .tag {
-  background-color: rgb(236, 236, 236);
+  background-color: #f5f4f4;
 }
 .ifHide {
   vertical-align: middle;
+  font-size:17px;
+  margin-left:10px;
 }
 
 .imgOut {
-  height: 70px;
+  height: 90px;
   width: 80%;
-  padding: 5%;
-  background-color: rgb(247, 247, 247);
+  margin-left:10%;
+  padding-top:15px;
+  padding-bottom:20px;
+  background-color: #FFFFFF;
   color: rgb(180, 180, 180);
   text-align: center;
   display:table-cell;
+  border-radius:15px;
 }
+
 .inputImg {
   opacity: 0;
+  width:100%;
 }
 
 .imgChoosed{
@@ -256,5 +363,6 @@ export default {
 
 .logo {
   height: 50px;
+  margin-top:5%;
 }
 </style>

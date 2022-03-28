@@ -1,0 +1,44 @@
+{
+  "id": "3218855",
+  "name": "信息市场 主页 底部",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "551475",
+      "name": "同行互助",
+      "font_class": "cooperation",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "4538203",
+      "name": "二手交易",
+      "font_class": "ershoujiaoyi1",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "11372716",
+      "name": "我的",
+      "font_class": "wode",
+      "unicode": "e8bb",
+      "unicode_decimal": 59579
+    },
+    {
+      "icon_id": "14411126",
+      "name": "发布",
+      "font_class": "fabuxianxing",
+      "unicode": "e69b",
+      "unicode_decimal": 59035
+    },
+    {
+      "icon_id": "15693915",
+      "name": "失物招领",
+      "font_class": "dibudaohanglan-3-copy-copy",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    }
+  ]
+}

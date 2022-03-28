@@ -27,7 +27,7 @@
             text:'',
             tag:'',
             imgSrc:'',
-            url:'http://47.96.119.233:8080/',
+            url:'http://mercuryblog.site:8080/',
       }
     },
     created(){},

@@ -1,13 +1,27 @@
 <template>
-   <div class="Title">
-       <div class="back" @click="back">返回</div>
-        <div>
+    <div class="Title">
+        <!-- <div class="back" @click="back">返回</div> -->
+        <!-- <el-button 
+            type="primary" 
+            icon="el-icon-back" 
+            plain size="small" 
+            round
+            class="back" 
+            @click="back"
+        >返回</el-button> -->
+        <van-nav-bar 
+        left-arrow 
+        left-text="返回"
+        @click-left="back" 
+        class="back"
+        />
+        <div class="headImgAll">
             <img :src="imgSrc" alt="" v-if="imgSrc">
-        </div>
-        <div class="userMsg">
             <svg class="icon" aria-hidden="true" @click="changeAnonymous" v-show="anonymous" >
                 <use :xlink:href=anonymous></use>
             </svg>
+        </div>
+        <div class="userMsg">
             <p class="userName">{{userName}}</p>
             <p class="userTime">{{userTime}}</p>
         </div>
@@ -16,37 +30,40 @@
 
 <script>
 import dayjs from 'dayjs'
-import '../../assets/font/iconfont'
+import {anonymousImg} from '../../mixin/anonymousImg'
+import '../../assets/font/font_anonymous/iconfont'
   export default {
     name: 'InfoTitle',
     components:{},
-    props:{},
+    mixins:[anonymousImg],
     data(){
       return {
-        imgSrc:'',
+        // imgSrc:'',
         userName:'',
         userTime:'',
-        anonymous:'',
-        anonymousArr:[
-            'icon-lanbaimao','icon-lanmao','icon-yinjianceng','icon-jinjianceng','icon-meiduan',
-            'icon-buoumao-xiyouse','icon-buoumao-zhongdianse','icon-buoumao-haibaoshuangse','icon-jiafeimao','icon-xianluomao',
-            'icon-nainiumao','icon-dajumao','icon-abixiniyamao','icon-shizimao','icon-mianyinmao',
-            'icon-sanhuamao','icon-daimaomao','icon-sifenkesiwumaomao','icon-heimao','icon-lihuamao'
-        ],
-        url:'http://47.96.119.233:8080/',
+        // anonymous:'',
+        // anonymousArr:[
+        //     'icon-lanbaimao','icon-lanmao','icon-yinjianceng','icon-jinjianceng','icon-meiduan',
+        //     'icon-buoumao-xiyouse','icon-buoumao-zhongdianse','icon-buoumao-haibaoshuangse','icon-jiafeimao','icon-xianluomao',
+        //     'icon-nainiumao','icon-dajumao','icon-abixiniyamao','icon-shizimao','icon-mianyinmao',
+        //     'icon-sanhuamao','icon-daimaomao','icon-sifenkesiwumaomao','icon-heimao','icon-lihuamao'
+        // ],
+        url:'http://mercuryblog.site:8080/',
       }
     },
     created(){},
     mounted(){
         this.$axios.get('/back').then(
             res=>{
-                // console.log(res.data);
+                console.log(res.data);
                 let index = this.$store.state.info.index
-                if(res.data[index].user.invisible){
-                    this.imgSrc = this.url+res.data[index].user.headImg
-                }else{
-                    this.anonymous = '#'+this.anonymousArr[Math.floor(Math.random() * 20 )]
-                }
+                console.log(!res.data[index].invisible);
+                this.avatar(res.data,index)
+                // if(!res.data[index].invisible){
+                //     this.imgSrc = this.url+res.data[index].user.headImg
+                // }else{
+                //     this.anonymous = '#'+this.anonymousArr[Math.floor(Math.random() * 20 )]
+                // }
                 this.userName = res.data[index].user.name
                 this.userTime = dayjs(res.data[index].releasetime).format('YYYY-MM-DD HH:mm:ss')
             },
@@ -58,9 +75,9 @@ import '../../assets/font/iconfont'
     activated(){},
     updated(){},
     methods:{
-        changeAnonymous(){
-            this.anonymous = '#'+this.anonymousArr[Math.floor(Math.random() * 20 )]
-        },
+        // changeAnonymous(){
+        //     this.anonymous = '#'+this.anonymousArr[Math.floor(Math.random() * 20 )]
+        // },
         back () {
             this.$router.go(-1)
             console.log('???')
@@ -74,18 +91,30 @@ import '../../assets/font/iconfont'
 .Title{
     width: 90%;
     margin: 0 auto;
-    display: flex;
     .back {
-        position: absolute;
+        // position: absolute;
+        // overflow: hidden;
+        // float: left;
+        // position: fixed;
         left: 0;
+        margin-bottom: 10px;
+        
+        ::v-deep .van-nav-bar__arrow ,
+        ::v-deep .van-nav-bar__text{
+            color:rgb(255, 148, 9);
+            font-size: 16px;
+        }
     }
     // background-color: aqua;
-    img{
-        border-radius: 50%;
-        width: 60px;
-        height: 60px;
+    .headImgAll{
+        .icon,img{
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            float: left;
+            margin-right: 10px;
+        }
     }
-
     .userMsg{
         margin-left: 10px;
         height: 60px;
@@ -96,13 +125,6 @@ import '../../assets/font/iconfont'
         .userTime{
             font-size: 15px;
             width: 400px;
-        }
-        .icon{
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            float: left;
-            margin-right: 10px;
         }
     }
 }

@@ -10,6 +10,7 @@
                 <p>{{like}}</p>
                 <transition 
                     name="animate__animated animate__bounce"
+                    enter-active-class="animate__pulse"
                     leave-active-class="animate__fadeOutUp"
                 >
                     <img v-if="!like" @click="likeUpData" src="../../assets/imgs/pick.png">
@@ -26,8 +27,44 @@
                         src="../../assets/imgs/picked.png"
                     >
                 </transition>
-                <p>{{commentData.length}}</p>
-                <img  src="../../assets/imgs/commend.png">
+                <div >
+                    <p>{{commentData.length}}</p>
+                    <img @click="showComment" src="../../assets/imgs/commend.png">
+
+                    <transition 
+                        name="animate__animated animate__bounce"
+                        enter-active-class="animate__backInDown"
+                        leave-active-class="animate__backOutDown">
+                        
+                        <div class="sendComment" v-show="commentFlag">
+                            <el-input
+                            placeholder="请输入评论"
+                            v-model="input"
+                            clearable
+                            class="sendInput"
+                            autosize
+                            >
+                            </el-input>
+                            <button class="c-button c-button--gooey" @click="postComment" > 发送
+                            <div class="c-button__blobs">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            </div>
+                            </button>
+                            <svg style="display: block; height: 0; width: 0;" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <filter id="goo">
+                                <feGaussianBlur result="blur" stdDeviation="10" in="SourceGraphic"></feGaussianBlur>
+                                <feColorMatrix result="goo" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" mode="matrix" in="blur"></feColorMatrix>
+                                <feBlend in2="goo" in="SourceGraphic"></feBlend>
+                                </filter>
+                            </defs>
+                            </svg>
+                        </div>
+                        
+                    </transition>
+                </div>
             </div>
 
             <transition 
@@ -51,7 +88,7 @@
             <p>共有{{commentData.length}}条评论：</p>
             <div>
                 <ul>
-                    <li v-for="comment in commentData" :key="comment.user.id">
+                    <li v-for="(comment,index) in commentData" :key="index">
                         <!-- <img :src="url+comment.user.headImg" alt=""> -->
                         <el-avatar :size="30" :src="url+comment.user.headImg" class="commentHeadImg"></el-avatar>
                         <p>{{comment.user.name}}</p>: {{comment.commentText}}
@@ -81,8 +118,10 @@ export default {
             // {id:'2',name:'张三',data:'456'},
             // {id:'3',name:'五四',data:'789'},
         ],
-        url:'http://47.96.119.233:8080/',
+        url:'http://mercuryblog.site:8080/',
         shareFlag : false,
+        commentFlag:false,
+        input:'',
         share:{
             title: '',
             desc: '',
@@ -95,49 +134,114 @@ export default {
     mounted(){
         this.$axios.get('/back').then(
             res=>{
-                let index = this.$store.state.info.index
-                this.commentData = res.data[index].comments
-                this.imgSrc = res.data[index]
-                this.like = res.data[index].likes
+                // let index = this.$store.state.info.index
+                this.commentData = res.data[this.index].comments
+                this.imgSrc = res.data[this.index]
+                this.like = res.data[this.index].likes
                 setTimeout(()=>{
                     this.likes = this.like
                 },1000)
 
-                this.share.title = res.data[index].tag
-                this.share.desc = res.data[index].descriptiontext
-                this.share.image_url = this.url+res.data[index].img
+                this.share.title = res.data[this.index].tag
+                this.share.desc = res.data[this.index].descriptiontext
+                this.share.image_url = this.url+res.data[this.index].img
                 this.share.share_url = '买了服务器网页的地址'
             },
             err=>{
                 console.log(err);
             }
         )
+                // alert(this.index)
     },
     activated(){},
     updated(){},
     methods:{
+         //like从0-1   
         likeUpData(){
             this.like++
+            this.likeFlag = !this.likeFlag
             setTimeout(()=>{
                 this.likes++
             },1000)
+            this.$axios.post('/back/updateLikes?dynamicId='+(this.index+1)+'&likes='+this.like)
         },
+        //like从1-...  ...-1    1-0特殊
         likesUpData(){
-            if(!this.likeFlag){
-                this.likeFlag = true
-                this.like++
+            if(this.like === 1){
                 this.likes = 0
                 setTimeout(()=>{
-                    this.likes = this.like
-                },5)  
-            }else{
-                this.likeFlag = false
-                this.like--
-                this.likes = 0
-                setTimeout(()=>{
-                    this.likes = this.like
+                    this.like = 0
                 },1000)
+            }else{
+                if(!this.likeFlag){
+                    this.likeFlag = true
+                    this.like++
+                    this.likes = 0
+                    setTimeout(()=>{
+                        this.likes = this.like
+                    },5)  
+                }else{
+                    this.likeFlag = false
+                    this.like--
+                    this.likes = 0
+                    setTimeout(()=>{
+                        this.likes = this.like
+                    },1000)
+                }
             }
+            
+            this.$axios.post('/back/updateLikes?dynamicId='+(this.index+1)+'&likes='+this.like)
+        },
+
+        //评论
+        showComment(){
+            this.commentFlag = !this.commentFlag
+        },
+        postComment(){
+            let comment = {
+                    commentText:this.input,
+                    dynamicId:Number(this.index+1),
+                    user:{
+                        // dynamicSum: 0,
+                        // headImg: "string",
+                        // id: 0,
+                        // introduction: "string",
+                        // likesSum: 0,
+                        // name: "string",
+                        // password: "string",
+                        // qqnum: "string",
+                        // telnum: "string"
+                    }
+                }
+            console.log(comment)
+            console.log(typeof(Number(this.index)))
+            this.input = ''
+            this.$axios.get('/back/login?id=123&password=123').then(
+                res=>{
+                    console.log('登录成功'+res)
+                    this.$axios.post('/back/releaseComment',comment).then(
+                    res=>{
+                        console.log(res)
+                        this.$axios.get('/back').then(
+                            res=>{
+                                console.log(res.data)
+                                // let index = this.$store.state.info.index
+                                this.commentData = res.data[this.index].comments
+                            },
+                            err=>{
+                                console.log(err)
+                            }
+                        )
+                    },
+                    err=>{
+                        console.log(err);
+                    }
+                    )   
+                },
+                err=>{
+                    console.log(err)
+                }
+            )
         },
 
             //分享到QQ好友(PC端可用) 
@@ -167,28 +271,110 @@ export default {
             location.href=(        
                 "https://service.weibo.com/share/share.php?url=" +          
                 encodeURIComponent(this.share.share_url) + "&title=" +          
-                this.share.title + "&pic=" + encodeURIComponent(this.share.image_url) + "&searchPic=true"
+                this.share.title + "&pic=" + encodeURIComponent("http:"+this.share.image_url) + "&searchPic=true"
                 );
+        },
+        
+    },
+    computed:{
+        index(){
+            return this.$store.state.info.index
         }
     },
-    computed:{},
     watch:{},
   }
 </script>
-<style scoped lang='less'>
+<style scoped lang="less">
     .others{
         overflow: hidden;
         width: 85%;
         margin: 0 auto;
         // background-color: aquamarine;
         .otherAll{
-            margin-bottom: 60px;
+            // margin-bottom: 60px;
             .otherLeft{
                 color: black;
                 p{
                     float: left;
                 }
                 // margin-bottom: 10px;
+            }
+
+            .sendComment{
+                clear: both;
+                display: flex;
+                justify-content: space-around;
+                // margin: 0px;
+                /* From cssbuttons.io */
+                .sendInput{
+                    width: 70%;
+                }
+                .c-button {
+                color: #000;
+                font-weight: 700;
+                font-size: 14px;
+                text-decoration: none;
+                padding: 0.6em 0.8em;
+                cursor: pointer;
+                display: inline-block;
+                vertical-align: middle;
+                position: relative;
+                z-index: 1;
+                }
+
+                .c-button--gooey {
+                color: #6495ED;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                border: 4px solid #6495ED;
+                border-radius: 0;
+                position: relative;
+                transition: all 700ms ease;
+                }
+
+                .c-button--gooey .c-button__blobs {
+                height: 100%;
+                filter: url(#goo);
+                overflow: hidden;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: -3px;
+                right: -1px;
+                z-index: -1;
+                }
+
+                .c-button--gooey .c-button__blobs div {
+                background-color: #6495ED;
+                width: 34%;
+                height: 100%;
+                border-radius: 100%;
+                position: absolute;
+                transform: scale(1.4) translateY(125%) translateZ(0);
+                transition: all 700ms ease;
+                }
+
+                .c-button--gooey .c-button__blobs div:nth-child(1) {
+                left: -5%;
+                }
+
+                .c-button--gooey .c-button__blobs div:nth-child(2) {
+                left: 30%;
+                transition-delay: 60ms;
+                }
+
+                .c-button--gooey .c-button__blobs div:nth-child(3) {
+                left: 66%;
+                transition-delay: 25ms;
+                }
+
+                .c-button--gooey:hover {
+                color: #fff;
+                }
+
+                .c-button--gooey:hover .c-button__blobs div {
+                transform: scale(1.4) translateY(0) translateZ(0);
+                }
             }
     
             .share{
@@ -198,6 +384,7 @@ export default {
                 margin-top: 10px;
                 margin-right: -20px;
                 margin-bottom: 20px;
+                
             }
             
             img{
@@ -225,10 +412,10 @@ export default {
             // margin-top: 120px;
             ul{
                 list-style: none;
-                margin-left: -20px;
                 // margin-top: -10px;
                 li{
                     margin-bottom: 20px;
+                    // margin-left: 20px;
                 }
                 p{
                     display: inline;
@@ -238,21 +425,22 @@ export default {
                 .commentHeadImg{
                     position: relative;
                     top: 10px;
-                    left: -3px;
+                    // left: -30px;
                 }            
             }
         }
     }
 
 
-    /* 关于 */
-    .about {
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        backdrop-filter: blur(4rpx);
-        background-color: rgba(0, 0, 0, .3);
-    }
+/* 关于 */
+.about {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4rpx);
+    background-color: rgba(0, 0, 0, .3);
+}
+
 </style>

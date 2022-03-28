@@ -8,8 +8,8 @@
 
 <script>
 import InfoTitle from '../components/Info/InfoTitle'
-import InfoOthers from '../components/Info/InfoOthers'
 import InfoText from '../components/Info/InfoText'
+import InfoOthers from '../components/Info/InfoOthers'
   export default {
     name: 'Info',
     components:{
