@@ -16,7 +16,12 @@
       <li class="home-card" v-for="j in filterCard" :key="filterCard.indexOf(j)">
         <!--    左边-->
         <span class="left">
-          <img :src="j.headImg" alt="头像">
+          <div class="headImgAll">
+            <img :src="j.imgSrc" alt="" v-if="j.imgSrc">
+            <svg class="icon" aria-hidden="true" @click="changeAnonymous" v-show="j.anonymous" >
+                <use :xlink:href=j.anonymous></use>
+            </svg>
+          </div>
         </span>
         <!--    右边-->
         <span class="right" @click="moreInfo(j)">
@@ -64,12 +69,13 @@
 </template>
 
 <script>
+import {anonymousImg} from '../../mixin/anonymousImg'
 import { mapMutations } from 'vuex'
 export default {
   name: "HomeCard",
   data () {
     return {
-      baseUrl: 'http://47.96.119.233:8080/',
+      baseUrl: 'http://mercuryblog.site:8080/',
       input: '',
       data:[
         // // 样本数据
@@ -104,6 +110,7 @@ export default {
       ] 
     }
   },
+  mixins:[anonymousImg],
   methods:{
     ...mapMutations(['activedId']),
     share () {
@@ -140,9 +147,12 @@ export default {
   mounted() {
     this.$axios.get('/back/index').then((res) => {
       for(let i of res.data) {
-        i.img = this.baseUrl + i.img,
-        i.headImg = this.baseUrl + i.user.headImg
-        console.log(i)
+        i.img = this.baseUrl + i.img
+        this.avatar(i)
+        i.imgSrc = this.imgSrc
+        i.anonymous = this.anonymous
+        // console.log(i)
+        //保证响应式
         this.data.push(i)
       }
     }).catch((err) => {
@@ -216,6 +226,13 @@ export default {
  }
  /*三级*/
  .left img{
+   display: inline-block;
+   height: 2.5rem;
+   width: 2.5rem;
+   border: 2px solid #e3e3e3;
+   border-radius: 5rem;
+ }
+ .left .icon{
    display: inline-block;
    height: 2.5rem;
    width: 2.5rem;

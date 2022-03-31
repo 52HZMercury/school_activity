@@ -127,7 +127,7 @@
 
 <script>
   export default {
-    name:'personalDetail',
+    name:'PersonalDetail',
     components:{},
     props:{},
     data(){

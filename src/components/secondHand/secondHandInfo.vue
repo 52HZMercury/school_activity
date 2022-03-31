@@ -1,9 +1,9 @@
 <template>
     <div>
-        <InfoTitle></InfoTitle>
+        <!-- <InfoTitle></InfoTitle> -->
 
         <div class="textMain">
-            <InfoText></InfoText>
+            <!-- <InfoText></InfoText> -->
             <ul>
                 <li v-for="(t,index) in thingsTag" :key="index">
                     <span>{{t}}</span>
@@ -47,19 +47,19 @@
             <secondHandContact v-show="contact"></secondHandContact>
         </transition>
 
-        <InfoOthers></InfoOthers>
+        <!-- <InfoOthers></InfoOthers> -->
     </div>
 </template>
 
 <script>
-import InfoTitle from '../Info/InfoTitle.vue'
-import InfoText from '../Info/InfoText'
+// import InfoTitle from '../Info/InfoTitle.vue'
+// import InfoText from '../Info/InfoText'
 import secondHandContact from './secondHandContact.vue'
-import InfoOthers from '../Info/InfoOthers'
+// import InfoOthers from '../Info/InfoOthers'
 import 'animate.css'
 export default {
     name:'secondHandInfo',
-    components:{InfoTitle,InfoText,secondHandContact,InfoOthers},
+    components:{secondHandContact},
     data() {
         return {
             quality:['破旧', '85新', '95新', '99新', '全新'],
@@ -124,7 +124,7 @@ export default {
 }
 </script>
 
-<style lang='less' scope>
+<style lang='less' scoped>
 
     .textMain{
         ul{
@@ -147,7 +147,7 @@ export default {
         display: flex;
         justify-content: space-around;
         font-size: 15px;
-
+        margin-bottom: 20px;
         div{
             del{
                 font-size: 12px;

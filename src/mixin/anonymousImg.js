@@ -1,3 +1,4 @@
+import '../assets/font/font_anonymous/iconfont'
 export const anonymousImg = {
     data() {
         return {
@@ -9,14 +10,22 @@ export const anonymousImg = {
                 'icon-nainiumao','icon-dajumao','icon-abixiniyamao','icon-shizimao','icon-mianyinmao',
                 'icon-sanhuamao','icon-daimaomao','icon-sifenkesiwumaomao','icon-heimao','icon-lihuamao',
             ],
+            url:'http://mercuryblog.site:8080/'
         }
     },
     methods: {
-        //传进来res.data
-        avatar(data,index){
-            if(!data[index].invisible){
-                this.imgSrc = this.url+data[index].user.headImg
+        //传进来res.data[index]
+        avatar(data){
+            // console.log(data.invisible)
+            // console.log(data)
+            if(!data.invisible){
+                this.imgSrc = this.url+data.user.headImg
+                // console.log(this.anonymous)
+                //考虑覆盖
+                this.anonymous = ''
             }else{
+                //考虑覆盖
+                this.imgSrc = ''
                 this.anonymous = '#'+this.anonymousArr[Math.floor(Math.random() * 20 )]
             }
         },

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="body-bg">
         <div class="title">
             <img src="../../assets\imgs\二手交易.png" alt="">
         </div>
@@ -145,7 +145,8 @@ export default {
                 }
             })
             setTimeout(()=>{
-                
+                this.$router.push({name:'secondHandDetail'})
+                // this.$router.push({name:'secondHandChoice'})
             },500)
         }
     },
@@ -153,13 +154,11 @@ export default {
 }
 </script>
 
-<style lang='less' scope>
-    body{
-        background-color: rgb(241, 238, 238);
-    }
+<style scoped lang='less' >
     .title img{
         width: 100%;
         // border-radius: 30px;
+        margin-top: 45px;
     }
     .section{
         background-color: white;

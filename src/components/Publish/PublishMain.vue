@@ -185,7 +185,7 @@ export default {
 
     mainTagChoosed(){
       this.settag = '#二手闲置'
-      // this.$router.push('')
+      this.$router.push({name:'secondHandChoice'})
     },
 
     // 选择tag

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="body-bg">
         <div class="section">
             <div class="firstSection">
                 <p>
@@ -183,11 +183,14 @@ export default {
                 // on confirm
                     sessionStorage.setItem('msg',JSON.stringify(saveData))
                     console.log(sessionStorage.getItem('msg'))
+                    this.$router.back()
                 }).catch(() => {
                 // on cancel
                     let cancelData = {}
                     sessionStorage.setItem('msg',JSON.stringify(cancelData))
+                    this.$router.back()
                 });
+                
             },500)
         },
         send(){
@@ -214,10 +217,13 @@ export default {
                         (res)=>{
                             console.log(res);
                             if(res.status!== 200){
-                                alert("发表动态失败")
+                                this.$toast("发表动态失败")
+                            }else{
+                                this.$toast('发布动态成功 跳回主页面');
                             }
                         }
                     )
+                    this.$router.push({name:'HomeCardMain'})
                 },500)
 
             }
@@ -238,15 +244,18 @@ export default {
 }
 </script>
 
-<style lang="less" scope>
-    body{
-        background-color: rgb(241, 238, 238);
-    }
+<style lang="less" scoped>
+    // body{
+    //     background-color: rgb(241, 238, 238);
+    // }
     .section{
         background-color: white;
         border-radius: 10px;
         padding: 5px 15px;
         margin: 10px 0;
+        &:nth-child(1){
+            margin-top: 50px;
+        }
         i{
             font-size: 23px;
             // color: #ccc;

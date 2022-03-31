@@ -1,0 +1,14 @@
+/*
+    设置了scoped  导致在组件里面不能直接修改 body属性
+    就做一个类似body的，需要改变全局背景的 就在根div加这个类名
+    在app里面引入
+*/
+.body-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    background-color: rgb(241, 238, 238);
+  }

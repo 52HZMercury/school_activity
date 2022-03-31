@@ -1,14 +1,14 @@
 <template>
     <div>
-        <personalDetail></personalDetail>
+        <PersonalDetail></PersonalDetail>
     </div>
 </template>
 
 <script>
-import personalDetail from '../components/msg/personalDetail.vue'
+import PersonalDetail from '../components/Message/PersonalDetail.vue'
 export default {
-    name:'message',
-    components:{personalDetail}
+    name:'Message',
+    components:{PersonalDetail}
 }
 </script>
 

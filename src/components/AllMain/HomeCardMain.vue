@@ -45,7 +45,12 @@
       <li class="home-card" v-for="j in filterCard" :key="filterCard.indexOf(j)">
         <!--    左边-->
         <span class="left">
-          <img :src="j.headImg" alt="头像">
+          <div class="headImgAll">
+            <img :src="j.imgSrc" alt="" v-if="j.imgSrc">
+            <svg class="icon" aria-hidden="true" @click="changeAnonymous" v-show="j.anonymous" >
+                <use :xlink:href=j.anonymous></use>
+            </svg>
+          </div>
         </span>
         <!--    右边-->
         <span class="right" @click="moreInfo(j)">
@@ -96,7 +101,8 @@
 </template>
 
 <script>
-// import { mapMutations } from 'vuex'
+import { mapMutations } from 'vuex'
+import {anonymousImg} from '../../mixin/anonymousImg'
 export default {
   name: "HomeCardMain",
   data () {
@@ -107,8 +113,9 @@ export default {
       filterCard:[]
     }
   },
+  mixins:[anonymousImg],
   methods:{
-    // ...mapMutations(['activedId']),
+    ...mapMutations(['activedId']),
     //时间
     formatTime (timeStamp)
     {
@@ -124,12 +131,12 @@ export default {
     //用vuex保存用户点击网页的index值
     moreInfo (targetObj) {
       console.log(targetObj.id)
-      // this.activedId({
-      //     id: targetObj.id,
-      //     index: this.data.indexOf(targetObj)
-      // })
-      // console.log('store:', this.$store.state.info)
-      // this.$router.push('/info')
+      this.activedId({
+          id: targetObj.id,
+          index: this.data.indexOf(targetObj)
+      })
+      console.log('store:', this.$store.state.info)
+      this.$router.push('/info')
     },
     searchList(){
       // filterCard
@@ -145,13 +152,16 @@ export default {
     }
   },
   mounted() {
-    this.$axios.get('/back/index').then((res) => {
+      this.$axios.get('/back/index').then((res) => {
       for(let i of res.data) {
-        i.img = this.baseUrl + i.img,
-        i.headImg = this.baseUrl + i.user.headImg
+        i.img = this.baseUrl + i.img
+        this.avatar(i)
+        i.imgSrc = this.imgSrc
+        i.anonymous = this.anonymous
         console.log(i)
+        //保证响应式
         this.data.push(i)
-        this.filterCard = this.data
+        this.filterCard.push(i)
       }
     }).catch((err) => {
       console.warn(err)
@@ -230,6 +240,13 @@ export default {
  }
  /*三级*/
  .left img{
+   display: inline-block;
+   height: 2.5rem;
+   width: 2.5rem;
+   border: 2px solid #e3e3e3;
+   border-radius: 5rem;
+ }
+  .left .icon{
    display: inline-block;
    height: 2.5rem;
    width: 2.5rem;

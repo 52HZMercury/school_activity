@@ -1,21 +1,28 @@
 <template>
   <div id="app">   
-      <!-- <router-view/> -->
-      <AllMain></AllMain>
+      <router-view></router-view>
+      <!-- <MyGoods></MyGoods> -->
   </div>
 </template>
 
 <script>
-import secondHand from './views/secondHand.vue'
-import AllMain from './views/AllMain.vue'
+import '../src/assets/css/background-color.css'
+// import secondHand from './views/secondHand.vue'
+// import AllMain from './views/AllMain.vue'
+// import MyGoods from './views/MyGoods.vue'
+// import Info from './views/Info.vue'
+// import Home from './views/Home.vue'
 export default{
   name: 'App',
-  components: { AllMain },
+  // components: { MyGoods },
 }
 
 </script>
 
-<style>
+<style scoped>
+/* body{
+  background-color: white;
+} */
 /* *{
   margin: 0;
   padding: 0;

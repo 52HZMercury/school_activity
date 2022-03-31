@@ -1,20 +1,12 @@
 <template>
     <div class="Title">
-        <!-- <div class="back" @click="back">返回</div> -->
-        <!-- <el-button 
-            type="primary" 
-            icon="el-icon-back" 
-            plain size="small" 
-            round
-            class="back" 
-            @click="back"
-        >返回</el-button> -->
-        <van-nav-bar 
+        <!-- <van-nav-bar 
         left-arrow 
         left-text="返回"
         @click-left="back" 
         class="back"
-        />
+        /> -->
+        <Back></Back>
         <div class="headImgAll">
             <img :src="imgSrc" alt="" v-if="imgSrc">
             <svg class="icon" aria-hidden="true" @click="changeAnonymous" v-show="anonymous" >
@@ -31,11 +23,13 @@
 <script>
 import dayjs from 'dayjs'
 import {anonymousImg} from '../../mixin/anonymousImg'
-import '../../assets/font/font_anonymous/iconfont'
+import Back from '../Common/Back.vue'
+// import '../../assets/font/font_anonymous/iconfont'
   export default {
     name: 'InfoTitle',
     components:{},
     mixins:[anonymousImg],
+    components:{Back},
     data(){
       return {
         // imgSrc:'',
@@ -58,7 +52,7 @@ import '../../assets/font/font_anonymous/iconfont'
                 console.log(res.data);
                 let index = this.$store.state.info.index
                 console.log(!res.data[index].invisible);
-                this.avatar(res.data,index)
+                this.avatar(res.data[index])
                 // if(!res.data[index].invisible){
                 //     this.imgSrc = this.url+res.data[index].user.headImg
                 // }else{
@@ -78,10 +72,10 @@ import '../../assets/font/font_anonymous/iconfont'
         // changeAnonymous(){
         //     this.anonymous = '#'+this.anonymousArr[Math.floor(Math.random() * 20 )]
         // },
-        back () {
-            this.$router.go(-1)
-            console.log('???')
-        }
+        // back () {
+        //     this.$router.go(-1)
+        //     console.log('???')
+        // }
     },
     computed:{},
     watch:{},
@@ -91,20 +85,20 @@ import '../../assets/font/font_anonymous/iconfont'
 .Title{
     width: 90%;
     margin: 0 auto;
-    .back {
-        // position: absolute;
-        // overflow: hidden;
-        // float: left;
-        // position: fixed;
-        left: 0;
-        margin-bottom: 10px;
+    // .back {
+    //     // position: absolute;
+    //     // overflow: hidden;
+    //     // float: left;
+    //     // position: fixed;
+    //     left: 0;
+    //     margin-bottom: 10px;
         
-        ::v-deep .van-nav-bar__arrow ,
-        ::v-deep .van-nav-bar__text{
-            color:rgb(255, 148, 9);
-            font-size: 16px;
-        }
-    }
+    //     ::v-deep .van-nav-bar__arrow ,
+    //     ::v-deep .van-nav-bar__text{
+    //         color:rgb(255, 148, 9);
+    //         font-size: 16px;
+    //     }
+    // }
     // background-color: aqua;
     .headImgAll{
         .icon,img{

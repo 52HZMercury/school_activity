@@ -40,7 +40,7 @@ export default {
             }else{
               this.data = res.data
               this.$store.commit('saveUserMsg',this.data)
-              this.$router.push('/home')
+              this.$router.push({name:'HomeCardMain'})
             }
           }
         )
