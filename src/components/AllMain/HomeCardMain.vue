@@ -42,7 +42,7 @@
 
     <ul>
       <!--    正式使用的数据-->
-      <li class="home-card" v-for="j in filterCard" :key="filterCard.indexOf(j)">
+      <li class="home-card" v-for="j in filterCard" :key="j.id">
         <!--    左边-->
         <span class="left">
           <div class="headImgAll">
@@ -83,7 +83,7 @@
           <div class="com-notice">共有{{j.comments.length}}条评论</div>
           <div class="commends">
   <!--         只展示前三条-->
-            <div class="commend" v-for="k in j.comments" :key="j.comments.indexOf(k)">
+            <div class="commend" v-for="k in j.comments" :key="k.dynamicId">
               <div v-if="j.comments.indexOf(k) < 3">
               <span class="com-user">{{k.user.name}}:</span>
               <span class="com-text">{{k.commentText}}</span>
@@ -140,13 +140,14 @@ export default {
     },
     searchList(){
       // filterCard
-      const {input, data} = this
-      this.filterCard = data
+      const {input} = this
+      this.filterCard = [...this.data]
       if(input.trim()) {
+        console.log('触发了', this.input)
         this.filterCard = this.data.filter((i) => {
-          return (i.tag.indexOf(input) !== -1)
-              || (i.user.name.indexOf(input) !== -1)
-              || (i.descriptiontext.indexOf(input) !== -1)
+          return (this.input.indexOf(i.tag) !== -1)
+              || (this.input.indexOf(i.user.name) !== -1)
+              || (this.input.indexOf(i.descriptiontext) !== -1)
         })
       }
     }

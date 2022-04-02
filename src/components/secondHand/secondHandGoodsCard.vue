@@ -15,11 +15,11 @@
             <div class="user">
                 <div class="head-image">
                     <img :src="baseURL + good.user.headImg" alt="用户头像">
-                    <div class="owner" v-if="good.invisible">张三</div>
+                    <div class="owner" v-if="good.invisible">{{good.user.name}}</div>
                     <div class="owner"  v-else>匿名用户</div>
                 </div>
                 
-                <div class="follow">0人想要</div>
+                <div class="follow">{{good.likes}}人想要</div>
             </div>
         </div>
     </div>

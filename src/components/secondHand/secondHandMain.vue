@@ -59,7 +59,7 @@ import secondHandGoodsCard from '@/components/secondHand/secondHandGoodsCard'
 <style scoped>
     .wrapper {
         background-color: #e3e3e3;
-        height: 100vh;
+        
         width: 100vw;
     }
     .goods {

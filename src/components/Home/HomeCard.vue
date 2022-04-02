@@ -114,7 +114,7 @@ export default {
   methods:{
     ...mapMutations(['activedId']),
     share () {
-      console.log('ceshi')
+      // console.log('ceshi')
     },
     pick (index, event) {
       if(!this.testDatas[index].flag)
@@ -161,7 +161,8 @@ export default {
   },
   computed: {
     filterCard() {
-      const {input, data} = this
+      
+      console.log(this.input)
       let filterData = [...data]
       if(input.trim()) {
         filterData = this.data.filter((i) => {
