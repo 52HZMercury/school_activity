@@ -64,12 +64,12 @@ const routes = [
     component: AllMain,
     children:[
       {
-        path: 'HomeCardMain',
+        path: '/HomeCardMain',
         name: 'HomeCardMain',
         component: HomeCardMain,
       },
       {
-        path: 'Publish',
+        path: '/Publish',
         name: 'Publish',
         component: Publish
       },
