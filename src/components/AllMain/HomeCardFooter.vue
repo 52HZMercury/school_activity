@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         goTo(f){
-            this.$router.replace(f.path)
+            this.$router.push(f.path)
             // console.log(id)
             // if(id == 1){
 

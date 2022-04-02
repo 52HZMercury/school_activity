@@ -6,49 +6,16 @@
         <div class="goods">
             <div class="list list-left">
                 <!-- 官方不推荐这么写，所以这里报错了，但是——管他呢 -->
+                <!-- 这是左边 -->
                 <div class="box" v-for="good in goods" :key="good.id" v-if="goods.indexOf(good) % 2 == 0">
-                    <div class="image-box">
-                        <img :src="baseURL + good.img" alt="这是一个图片">
-                    </div>
-                    <div class="info-box">
-                        <div class="intro">{{good.descriptiontext}}</div>
-                        <div class="info">
-                            <div class="tag" v-if="good.buyORsale">出售</div>
-                            <div class="tag" style="background-color:royalblue;" v-else>求购</div>
-                            <div class="location">#本校</div>
-                            <div class="price">￥{{good.sellPrice}}</div>
-                        </div>
-                        <div class="user">
-                            <div class="head-image">
-                                <img :src="baseURL + good.user.headImg" alt="用户头像">
-                                <div class="owner" v-if="good.invisible">张三</div>
-                                <div class="owner"  v-else>匿名用户</div>
-                            </div>
-                            
-                            <div class="follow">0人想要</div>
-                        </div>
-                    </div>
+                   <secondHandGoodsCard :good="good" :baseURL="baseURL"></secondHandGoodsCard>
                 </div>
             </div>
             
             <!-- 右边 -->
             <div class="list list-right">
                 <div class="box" v-for="good in goods" :key="good.id" v-if="goods.indexOf(good) % 2 == 1">
-                     <div class="image-box">
-                        <img :src="'http://47.96.119.233:8080/' +good.img" alt="这是一个图片">
-                    </div>
-                    <div class="info-box">
-                        <div class="intro">{{good.descriptiontext}}</div>
-                        <div class="info">
-                            <div class="tag">求购</div>
-                            <div class="location">本校</div>
-                            <div class="price">0.04</div>
-                        </div>
-                        <div class="user">
-                            <div class="owner">张三</div>
-                            <div class="follow">0人想要</div>
-                        </div>
-                    </div>
+                     <secondHandGoodsCard :good="good" :baseURL="baseURL"></secondHandGoodsCard>
                 </div>
             </div>
         </div>
@@ -56,9 +23,12 @@
 </template>
 
 <script>
+import secondHandGoodsCard from '@/components/secondHand/secondHandGoodsCard'
   export default {
     name: 'secondHandMain',
-    components:{},
+    components:{
+        secondHandGoodsCard
+    },
     props:{},
     data(){
       return {
@@ -90,6 +60,7 @@
     .wrapper {
         background-color: #e3e3e3;
         height: 100vh;
+        width: 100vw;
     }
     .goods {
         width: 100%;
@@ -101,7 +72,8 @@
         padding: 0 0.25rem 0;
     }
     .search-box {
-        width: 100%;
+        box-sizing: border-box;
+        width: 100vw;
         text-align: center;
         padding: 1rem;
     }
@@ -125,6 +97,7 @@
         border-radius: 1rem;
         text-align: center;
     }
+    /*
     .image-box {
         width: 100%;
         text-align: center;        
@@ -134,7 +107,8 @@
         border: 1px solid #3333;
         border-radius: 1rem;
         margin: 0.5rem auto 0;
-        
+        box-shadow: 0.1rem 0.1rem 2rem rgba(233, 233, 233, 0.8) inset,
+                    -0.1rem -0.1rem 2rem rgba(0, 0, 0, 1) inset;
     }
     .intro {
         text-align: left;
@@ -144,14 +118,18 @@
     }
     .info {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
+        padding: 0 0.5rem 0;
         align-items: center;
     }
     .tag {
-        background-color: rgb(220, 48, 79);
-        padding: 0.2rem 1rem 0.2rem;
-        border-radius: 1rem;
+        background-color: gold;
+        padding: 0.5rem 1.2rem 0.5rem;
+        border-radius: 1.5rem;
         color: #fff;
+        font-weight: 600;
+        font-size: 1.2rem;
+        cursor: pointer;
     }
     .location {
         color: gold;
@@ -159,15 +137,15 @@
         font-weight: 700;
     }
     .price {
-        color: rgb(235, 48, 79);
-        font-size: 1.5rem;
+        color: #ff3700;
+        font-size: 2rem;
         font-weight: 700;
     }
     .user {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
-        padding: 0.5rem 0 0.5rem;
+        padding: 0.5rem;
     }
     .head-image {
         height: 2rem;
@@ -181,5 +159,5 @@
         margin: 0 0.4rem 0 0;
     }
     .owner {
-    }
+    } */
 </style>
