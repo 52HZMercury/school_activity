@@ -56,9 +56,8 @@
         <img :src="require('../../assets/imgs/' + i.img)" :alt="i.name">
         <div>{{i.name}}</div>
       </li>
-
-  
     </ul>
+
   </div>
 </template>
 
@@ -79,11 +78,11 @@
           ],
           // 下面的选项
           options: [
-            {name: '联系我们', img: '联系我们.png'},
-            {name: '用户协议&隐私说明', img: '用户协议.png'},
-            {name: '切换校区', img: '切换校区.png'},
-            {name: '修改个人资料', img: 'share.png'},
-            {name: '注销', img: 'share.png'}
+            {name: '联系我们', img: '联系我们.png', clickEvent: null},
+            {name: '用户协议&隐私说明', img: '用户协议.png', clickEvent: null},
+            {name: '切换校区', img: '切换校区.png', clickEvent: null},
+            {name: '修改个人资料', img: 'share.png', clickEvent: null},
+            {name: '注销', img: '离开.png', clickEvent: null}
           ]
       }
     },
@@ -91,7 +90,15 @@
     mounted(){},
     activated(){},
     updated(){},
-    methods:{},
+    methods:{
+      // 考虑到未来可能还会做进一步的模块化，所以这里按照板块顺序进行一个区分
+      // 我的校园 板块内容写在这下面
+
+      // 选项 板块内容写在这下面
+      logout: function () {
+        
+      }
+    },
     computed:{},
     watch:{},
   }

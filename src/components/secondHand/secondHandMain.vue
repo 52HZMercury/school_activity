@@ -7,14 +7,14 @@
             <div class="list list-left">
                 <!-- 官方不推荐这么写，所以这里报错了，但是——管他呢 -->
                 <!-- 这是左边 -->
-                <div class="box" v-for="good in goods" :key="good.id" v-if="goods.indexOf(good) % 2 == 0">
+                <div class="box" v-for="good in goods" :key="good.id" v-if="goods.indexOf(good) % 2 == 0" @click="moreInfo(good)">
                    <secondHandGoodsCard :good="good" :baseURL="baseURL"></secondHandGoodsCard>
                 </div>
             </div>
             
             <!-- 右边 -->
             <div class="list list-right">
-                <div class="box" v-for="good in goods" :key="good.id" v-if="goods.indexOf(good) % 2 == 1">
+                <div class="box" v-for="good in goods" :key="good.id" v-if="goods.indexOf(good) % 2 == 1" @click="moreInfo(good)">
                      <secondHandGoodsCard :good="good" :baseURL="baseURL"></secondHandGoodsCard>
                 </div>
             </div>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import secondHandGoodsCard from '@/components/secondHand/secondHandGoodsCard'
   export default {
     name: 'secondHandMain',
@@ -51,7 +52,18 @@ import secondHandGoodsCard from '@/components/secondHand/secondHandGoodsCard'
     },
     activated(){},
     updated(){},
-    methods:{},
+    methods:{
+        ...mapMutations(['activedId']),
+        moreInfo (targetObj) {
+        console.log(targetObj.id)
+        this.activedId({
+          id: targetObj.id,
+          index: this.goods.indexOf(targetObj)
+        })
+        console.log('store:', this.$store.state.info)
+        this.$router.push('/info')
+    }
+    },
     computed:{},
     watch:{},
   }
