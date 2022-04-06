@@ -40,46 +40,11 @@
       <div class="title">我的校园</div>
       <div class="items">
 
-        <div class="item">
+        <div class="item" v-for="i in mySchool" :key="i.name">
           <div class="item-img">
-            <img src="../../assets/imgs/我的动态.png" alt="">
+            <img :src="require('../../assets/imgs/' + i.img)" :alt="i.name">
           </div>
-          <div>我的动态</div>
-        </div>
-
-        <div class="item">
-          <div class="item-img">
-            <img src="../../assets/imgs/校园榜单.png" alt="">
-          </div>
-          <div>校园榜单</div>
-        </div>
-
-        <div class="item">
-          <div class="item-img">
-            <img src="../../assets/imgs/pick.png" alt="">
-          </div>
-          <div>与我互动</div>
-        </div>
-
-        <div class="item">
-          <div class="item-img">
-            <img src="../../assets/imgs/我的社交.png" alt="">
-          </div>
-          <div>我的社交</div>
-        </div>
-
-        <div class="item">
-          <div class="item-img">
-            <img src="../../assets/imgs/我的闲置.png" alt="">
-          </div>
-          <div>我的闲置</div>
-        </div>
-      
-         <div class="item">
-          <div class="item-img">
-            <img src="../../assets/imgs/pick.png" alt="">
-          </div>
-          <div>我的购物</div>
+          <div>{{i.name}}</div>
         </div>
 
       </div>
@@ -87,40 +52,12 @@
 
   <!-- 第四排 -->
     <ul class="options">
-      <li>
-        <img src="../../assets/imgs/联系我们.png" alt="">
-        <div>联系我们</div>
+      <li v-for="i in options" :key="i.name">
+        <img :src="require('../../assets/imgs/' + i.img)" :alt="i.name">
+        <div>{{i.name}}</div>
       </li>
 
-      <li>
-        <img src="../../assets/imgs/用户协议.png" alt="">
-        <div>用户协议&隐私说明</div>
-      </li>
-      
-      <li>
-        <img src="../../assets/imgs/管理员申请.png" alt="">
-        <div>管理员申请</div>
-      </li>
-
-      <li>
-        <img src="../../assets/imgs/切换校区.png" alt="">
-        <div>切换校区</div>
-      </li>
-      
-      <li>
-        <img src="../../assets/imgs/修改个人资料.png" alt="">
-        <div>修改个人资料</div>
-      </li>
-      
-      <li>
-        <img src="../../assets/imgs/share.png" alt="">
-        <div>添加快捷入口</div>
-      </li>
-
-      <li>
-        <img src="../../assets/imgs/share.png" alt="">
-        <div>注销</div>
-      </li>
+  
     </ul>
   </div>
 </template>
@@ -132,7 +69,22 @@
     props:{},
     data(){
       return {
-          
+          // 我的校园 这一板块内的几个功能
+          mySchool: [
+            {name: '我的动态', img: '我的动态.png'},
+            {name: '校园榜单', img: '校园榜单.png'},
+            {name: '与我互动', img: 'pick.png'},
+            {name: '我的社交', img: '我的闲置.png'},
+            {name: '我的购物', img: '购物车.png'}
+          ],
+          // 下面的选项
+          options: [
+            {name: '联系我们', img: '联系我们.png'},
+            {name: '用户协议&隐私说明', img: '用户协议.png'},
+            {name: '切换校区', img: '切换校区.png'},
+            {name: '修改个人资料', img: 'share.png'},
+            {name: '注销', img: 'share.png'}
+          ]
       }
     },
     created(){},

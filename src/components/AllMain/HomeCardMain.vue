@@ -141,6 +141,7 @@ export default {
     searchList(){
       // filterCard
       const {input} = this
+      this.filterCard
       this.filterCard = [...this.data]
       if(input.trim()) {
         console.log('触发了', this.input)
