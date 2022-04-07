@@ -8,6 +8,7 @@ import Login from '@/views/Login.vue'
 import Log from '@/components/Login/Log.vue'
 import Register from '@/components/Login/Register.vue'
 import ResetPsw from '@/views/Resetpsw.vue'
+import MyIssue from '@/views/MyIssue.vue'
 
 import AllMain from '../views/AllMain'
 import HomeCardMain from '../components/AllMain/HomeCardMain'
@@ -16,7 +17,7 @@ import secondHand from '../views/secondHand'
 import secondHandChoice from '../components/secondHand/secondHandChoice'
 import secondHandDetail from '../components/secondHand/secondHandDetail'
 
-import Message from '../views/Message'
+import Message from '../views/message'
 import PersonalDetail from '../components/Message/PersonalDetail'
 Vue.use(VueRouter)
 
@@ -109,6 +110,11 @@ const routes = [
       }
     ]
   },
+  {
+    path:'/myissue',
+    name:'MyIssue',
+    component:MyIssue
+  }
   
 
 ]
