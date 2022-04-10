@@ -12,7 +12,7 @@
 
 
     <insert id="add_goods" parameterType="Goods" >
-        insert into goods (userId,brand,xingHao,quality,originalPrice,sellPrice,ISbargain) values (#{userId},#{brand},#{xingHao},#{quality},#{originalPrice},#{sellPrice},#{ISbargain})
+        insert into goods (userId,brand,xingHao,quality,originalPrice,sellPrice,ISbargain,describe) values (#{userId},#{brand},#{xingHao},#{quality},#{originalPrice},#{sellPrice},#{ISbargain},#{describe})
     </insert>
 
 

@@ -42,4 +42,7 @@ public class Goods {
 
     @ApiModelProperty("是否砍价")
     private boolean ISbargain;
+
+    @ApiModelProperty("商品描述")
+    private String describe;
 }
