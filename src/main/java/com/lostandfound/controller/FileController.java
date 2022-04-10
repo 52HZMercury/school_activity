@@ -47,7 +47,7 @@ public class FileController {
         }finally {
             HttpSession session = request.getSession();
             System.out.println(session.getId() +" "+session.getAttribute("uid")+(String)session.getAttribute("dtext")+session.getAttribute("dtag"));
-            dynamicService.addImg("/img/dynamic/" +fileName, (Integer) session.getAttribute("uid"),(String)session.getAttribute("dtext"),(String)session.getAttribute("dtag"));
+            dynamicService.addImg("img/dynamic/" +fileName, (Integer) session.getAttribute("uid"),(String)session.getAttribute("dtext"),(String)session.getAttribute("dtag"));
         }
 
     }
