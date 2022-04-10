@@ -86,7 +86,7 @@
     </select>
 
     <delete id="deleteDynamic" parameterType="int">
-        DELETE FROM DYNAMIC WHERE id = #{id}
+        DELETE FROM dynamic WHERE id = #{id}
     </delete>
 
     <delete id="deleteComment" parameterType="int">
