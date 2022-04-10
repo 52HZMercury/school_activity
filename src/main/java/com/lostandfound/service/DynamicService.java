@@ -63,4 +63,12 @@ public class DynamicService {
          dynamicMapper.updatedynamic(dynamic);
     }
 
+    public void doDeleteDynamic(int id){
+        dynamicMapper.deleteDynamic(id);
+    }
+
+    public void doDeleteComment(int id){
+        dynamicMapper.deleteComment(id);
+    }
+
 }

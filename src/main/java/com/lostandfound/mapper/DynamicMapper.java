@@ -34,4 +34,8 @@ public interface DynamicMapper {
     void updatedynamic(Dynamic dynamic);
 
     int addNewDId ();
+
+    void deleteDynamic(int id);
+
+    void deleteComment(int id);
 }

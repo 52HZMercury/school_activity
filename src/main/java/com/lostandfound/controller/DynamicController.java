@@ -75,4 +75,18 @@ public class DynamicController {
          dynamicService.updateDynamic(dynamic);
     }
 
+
+    @PostMapping("/deleteDynamic")
+    @ApiOperation("用于删除动态")
+    public void deleteDynamic(int id){
+        dynamicService.doDeleteDynamic(id);
+    }
+
+
+    @PostMapping("/deleteComment")
+    @ApiOperation("用于删除评论")
+    public void deleteComment(int id){
+        dynamicService.doDeleteComment(id);
+    }
+
 }

@@ -84,4 +84,13 @@
     <select id="addNewDId" resultType="int">
         SELECT LAST_INSERT_ID() AS USERId
     </select>
+
+    <delete id="deleteDynamic" parameterType="int">
+        DELETE FROM DYNAMIC WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteComment" parameterType="int">
+        DELETE FROM comments WHERE id = #{id}
+    </delete>
+
 </mapper>
