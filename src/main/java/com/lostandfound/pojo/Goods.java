@@ -28,11 +28,6 @@ public class Goods {
     @ApiModelProperty("商品的品牌")
     private  String brand;
 
-    @ApiModelProperty("商品型号等信息，这个和品牌是分开的")
-    private  String xingHao;
-
-    @ApiModelProperty("商品的成色，这里使用int数值1-5表示成色")
-    private  int quality;
 
     @ApiModelProperty("商品的原价")
     private  String originalPrice;
