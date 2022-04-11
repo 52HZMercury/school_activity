@@ -39,5 +39,5 @@ public class Goods {
     private boolean ISbargain;
 
     @ApiModelProperty("商品描述")
-    private String describe;
+    private String description;
 }
