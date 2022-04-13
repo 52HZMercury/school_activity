@@ -29,8 +29,9 @@ public class GoodsController {
     private GoodsService goodsService;
 
     @PostMapping("/addgoodsTocar")
-    @ApiOperation("添加商品到购物车")
-    public void addgoodsTocar(@RequestBody Goods goods){
+    @ApiOperation("添加商品到购物车 userid后台获取")
+    public void addgoodsTocar(@RequestBody Goods goods,HttpSession session){
+        goods.setUserId((int)session.getAttribute("loginUserId"));
         goodsService.add_goods(goods);
     }
 
@@ -45,4 +46,11 @@ public class GoodsController {
     public void deletegoodsbyid(int id){
         goodsService.deletegoods(id);
     }
+
+    @PostMapping("/mygoods")
+    @ApiOperation("我的闲置")
+    public void getmysellgoods(HttpSession session){
+        goodsService.dogetmysellgoods((int)session.getAttribute("loginUserId"));
+    }
+
 }

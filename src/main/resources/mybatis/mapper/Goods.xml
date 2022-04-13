@@ -20,4 +20,9 @@
         delete from goods where id = #{id}
     </delete>
 
+
+    <select id="getmysellgoods" resultType="Goods">
+        SELECT * FROM  dynamic WHERE userId = '123' AND tag = '#二手交易'
+    </select>
+
 </mapper>

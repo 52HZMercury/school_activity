@@ -31,4 +31,8 @@ public class GoodsService {
     public void deletegoods(int id){
         goodsMapper.deletegoods(id);
     }
+
+    public void dogetmysellgoods(int userid){
+        goodsMapper.getmysellgoods(userid);
+    }
 }
