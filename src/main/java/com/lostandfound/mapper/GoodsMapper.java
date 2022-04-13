@@ -20,6 +20,6 @@ public interface GoodsMapper {
     //删除购物车里面的商品
     void deletegoods(int id);
 
-    void getmysellgoods(int userid);
+    List<Goods> getmysellgoods(int userid);
 
 }

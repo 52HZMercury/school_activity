@@ -32,7 +32,7 @@ public class GoodsService {
         goodsMapper.deletegoods(id);
     }
 
-    public void dogetmysellgoods(int userid){
-        goodsMapper.getmysellgoods(userid);
+    public List<Goods> dogetmysellgoods(int userid){
+       return goodsMapper.getmysellgoods(userid);
     }
 }

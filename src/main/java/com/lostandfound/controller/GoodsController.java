@@ -48,9 +48,9 @@ public class GoodsController {
     }
 
     @PostMapping("/mygoods")
-    @ApiOperation("我的闲置")
-    public void getmysellgoods(HttpSession session){
-        goodsService.dogetmysellgoods((int)session.getAttribute("loginUserId"));
+    @ApiOperation("我的闲置,不需要其他什么参数，登录即可")
+    public List<Goods> getmysellgoods(HttpSession session){
+        return  goodsService.dogetmysellgoods((int)session.getAttribute("loginUserId"));
     }
 
 }
