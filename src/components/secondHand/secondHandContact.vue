@@ -54,9 +54,10 @@ export default {
 
 <style lang='less' scoped>
     .contact{
+        z-index: 9;
         position:fixed;
         bottom: 0px;
-        width: 100%;
+        width: 100vw;
         border-radius: 10px;
         // height: 150px;
         background-color: rgb(235, 230, 230);

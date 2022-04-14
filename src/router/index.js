@@ -16,9 +16,12 @@ import HomeCardMain from '../components/AllMain/HomeCardMain'
 import secondHand from '../views/secondHand'
 import secondHandChoice from '../components/secondHand/secondHandChoice'
 import secondHandDetail from '../components/secondHand/secondHandDetail'
+import secondHandMain from '../components/secondHand/secondHandMain'
 
-import Message from '../views/message'
+import Message from '../views/Message'
 import PersonalDetail from '../components/Message/PersonalDetail'
+
+import MyGoods from '../views/MyGoods'
 Vue.use(VueRouter)
 
 const routes = [
@@ -65,12 +68,17 @@ const routes = [
     component: AllMain,
     children:[
       {
-        path: '/HomeCardMain',
+        path:'secondHandMain',
+        name:'secondHandMain',
+        component:secondHandMain,
+      },
+      {
+        path: 'HomeCardMain',
         name: 'HomeCardMain',
         component: HomeCardMain,
       },
       {
-        path: '/Publish',
+        path: 'Publish',
         name: 'Publish',
         component: Publish
       },
@@ -89,8 +97,19 @@ const routes = [
             name:'PersonalDetail',
             component:PersonalDetail,
           },
+          {
+            path:'MyGoods',
+            name:'MyGoods',
+            component:MyGoods,   
+          },
+          {
+            path:'MyIssue',
+            name:'MyIssue',
+            component:MyIssue
+          }
         ]
-      }
+      },
+      
     ]
   },
   {
@@ -110,11 +129,6 @@ const routes = [
       }
     ]
   },
-  {
-    path:'/myissue',
-    name:'MyIssue',
-    component:MyIssue
-  }
   
 
 ]

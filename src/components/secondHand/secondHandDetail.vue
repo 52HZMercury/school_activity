@@ -195,7 +195,11 @@ export default {
         },
         send(){
             if(!this.phone.trim()){
-                alert('电话号码不能为空')
+                Dialog.alert({
+                    message: '电话号码不能为空'
+                }).then(() => {
+                // on close
+                });
             }else{
                 let data = {
                     descriptiontext:this.thingDescribe,

@@ -42,7 +42,7 @@
 
     <ul>
       <!--    正式使用的数据-->
-      <li class="home-card" v-for="j in filterCard" :key="j.id">
+      <li class="home-card" v-for="j in filterCard" :key="filterCard.indexOf(j)">
         <!--    左边-->
         <span class="left">
           <div class="headImgAll">
@@ -56,7 +56,7 @@
         <span class="right" @click="moreInfo(j)">
           <div class="username">{{j.user.name}}</div>
           <div class="time">{{formatTime(j.releasetime)}}</div>
-          <div class="tag">#{{j.tag}}#</div>
+          <div class="tag">{{j.tag}}#</div>
           <div class="text">{{j.descriptiontext}}</div>
           <div class="text-imgs">
             <img :src="j.img" alt="图片信息">
@@ -83,7 +83,7 @@
           <div class="com-notice">共有{{j.comments.length}}条评论</div>
           <div class="commends">
   <!--         只展示前三条-->
-            <div class="commend" v-for="k in j.comments" :key="k.dynamicId">
+            <div class="commend" v-for="k in j.comments" :key="j.comments.indexOf(k)">
               <div v-if="j.comments.indexOf(k) < 3">
               <span class="com-user">{{k.user.name}}:</span>
               <span class="com-text">{{k.commentText}}</span>
@@ -140,15 +140,13 @@ export default {
     },
     searchList(){
       // filterCard
-      const {input} = this
-      this.filterCard
-      this.filterCard = [...this.data]
+      const {input, data} = this
+      this.filterCard = data
       if(input.trim()) {
-        console.log('触发了', this.input)
         this.filterCard = this.data.filter((i) => {
-          return (this.input.indexOf(i.tag) !== -1)
-              || (this.input.indexOf(i.user.name) !== -1)
-              || (this.input.indexOf(i.descriptiontext) !== -1)
+          return (i.tag.indexOf(input) !== -1)
+              || (i.user.name.indexOf(input) !== -1)
+              || (i.descriptiontext.indexOf(input) !== -1)
         })
       }
     }
@@ -160,7 +158,7 @@ export default {
         this.avatar(i)
         i.imgSrc = this.imgSrc
         i.anonymous = this.anonymous
-        console.log(i)
+        // console.log(i)
         //保证响应式
         this.data.push(i)
         this.filterCard.push(i)

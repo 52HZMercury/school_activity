@@ -2,7 +2,7 @@
     <!-- footer -->
     <footer>
         <ul class="footerWrapper">
-            <li :class="classObj" v-for="f in footer" :key="f.id" @click="goTo(f)">
+            <li class="footerFont" v-for="f in footer" :key="f.id" @click="goTo(f.id)">
                 <i :class="f.class">{{f.iconfont}}</i>
                 <span :class="f.class">{{f.text}}</span>
             </li>
@@ -18,33 +18,29 @@ export default {
         return {
             footer:[
                 // {id:1, iconfont:'\ue629',text:'主页'},
-                {id:1, iconfont:'\ue629',text:'二手交易',class:'iconfont', path: '/secondHand'},
-                {id:2, iconfont:'\ue611',text:'互助',class:'iconfont', path: ''},
-                {id:3, iconfont:'\ue69b',text:'发布',class:'iconfont', path: '/Publish'},
-                {id:4, iconfont:'\ue600',text:'失物招领',class:'iconfont', path: ''},
-                {id:5, iconfont:'\ue8bb',text:'我的',class:'iconfont', path:'/Message'},
+                {id:1, iconfont:'\ue629',text:'二手交易',class:'iconfont'},
+                {id:2, iconfont:'\ue611',text:'互助',class:'iconfont'},
+                {id:3, iconfont:'\ue69b',text:'发布',class:'iconfont'},
+                {id:4, iconfont:'\ue600',text:'失物招领',class:'iconfont'},
+                {id:5, iconfont:'\ue8bb',text:'我的',class:'iconfont'},
             ],
-            classObj:{
-                footerFont:true,
-                choose:false
-            }
+
         }
     },
     methods: {
-        goTo(f){
-            this.$router.push(f.path)
-            // console.log(id)
-            // if(id == 1){
+        goTo(id){
+            console.log(id)
+            if(id == 1){
+                this.$router.push({name:'secondHandMain'})
+            }else if(id == 2){
+                this.$router.push({name:'Home'})
+            }else if(id == 3){
+                this.$router.push({name:'Publish'})
+            }else if(id == 4){
 
-            // }else if(id == 2){
-            //     this.$router.push({name:'Home'})
-            // }else if(id == 3){
-            //     this.$router.push({name:'Publish'})
-            // }else if(id == 4){
-
-            // }else if(id == 5){
-            //     this.$router.push({name:'Message'})
-            // }
+            }else if(id == 5){
+                this.$router.push({name:'PersonalDetail'})
+            }
         }
     },
     watch:{
@@ -53,8 +49,8 @@ export default {
             console.log(from.path,"来自哪个页面的")
             console.log(to.path.indexOf("Publish") )
             if(to.path.indexOf("Publish")  !== -1){
-                console.log("bainse")
-                console.log(this.classObj.choose)
+                // console.log("bainse")
+                // console.log(this.classObj.choose)
                 this.footer[2].class += " choose"
             }else{
                 this.footer[2].class = 'iconfont'

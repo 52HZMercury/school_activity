@@ -1,14 +1,15 @@
 <template>
     <div>
-        <PersonalDetail></PersonalDetail>
+        <!-- <PersonalDetail></PersonalDetail> -->
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-import PersonalDetail from '../components/Message/PersonalDetail.vue'
+// import PersonalDetail from '../components/Message/PersonalDetail.vue'
 export default {
     name:'Message',
-    components:{PersonalDetail}
+    // components:{PersonalDetail}
 }
 </script>
 

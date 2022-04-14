@@ -49,9 +49,9 @@ import Back from '../Common/Back.vue'
     mounted(){
         this.$axios.get('/back').then(
             res=>{
-                console.log(res.data);
+                // console.log(res.data);
                 let index = this.$store.state.info.index
-                console.log(!res.data[index].invisible);
+                // console.log(!res.data[index].invisible);
                 this.avatar(res.data[index])
                 // if(!res.data[index].invisible){
                 //     this.imgSrc = this.url+res.data[index].user.headImg

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="wrapper">
         <!-- <InfoTitle></InfoTitle> -->
 
         <div class="textMain">
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <button slot="reference" @click="showContact">
-                <div>
+                <div @click="addGood">
                     <span>
                     <p>{{text}}</p><p>:)</p>
                     </span>
@@ -52,11 +52,9 @@
 </template>
 
 <script>
-// import InfoTitle from '../Info/InfoTitle.vue'
-// import InfoText from '../Info/InfoText'
 import secondHandContact from './secondHandContact.vue'
-// import InfoOthers from '../Info/InfoOthers'
 import 'animate.css'
+import { Dialog } from 'vant'
 export default {
     name:'secondHandInfo',
     components:{secondHandContact},
@@ -70,10 +68,12 @@ export default {
             xingHao:'',
             contact:false,
             thingsTag:['出售','10新','自行车'],
-            index:45,
+            // index:45,
             flag:true,
             text:'',
-            origin:''
+            origin:'',
+            good:{},
+            goodFlag:true,
         }
     },
     mounted() {
@@ -82,10 +82,11 @@ export default {
                 console.log(res.data[this.index])
                 // this.thingsTag[0] = res.data[44]
                 // this.thingsTag.splice() = res.data[44]
-                if(res.data[this.index].brand){
+                if(res.data[this.index].buyORsale){
                     this.buyORsale = '出售'
                     this.text = '我想卖'
                     this.origin = '我想卖'
+                    // console.log(this.buyORsale)
                 }else{
                     this.buyORsale = '需求'
                     this.text = '我想买'
@@ -101,6 +102,15 @@ export default {
                 this.thingsTag.splice(2,1,res.data[this.index].brand)
                 this.originalPrice = res.data[this.index].originalPrice
                 this.sellPrice = res.data[this.index].sellPrice
+
+                this.good.brand = res.data[this.index].brand
+                this.good.describe = res.data[this.index].describe
+                this.good.id = res.data[this.index].id
+                this.good.isbargain = res.data[this.index].isbargain
+                this.good.originalPrice = res.data[this.index].originalPrice
+                this.good.sellPrice = res.data[this.index].sellPrice
+                this.good.userId = res.data[this.index].user.id
+
             },
             err=>{
                 console.log(err)
@@ -119,13 +129,37 @@ export default {
                 this.flag = !this.flag
             }
             console.log( this.contact )
+        },
+        addGood(){
+            if(this.text.indexOf('我想买') !== -1 && this.goodFlag){
+                console.log(this.good)
+                this.goodFlag = false
+                this.$axios.post('/back/addgoodsTocar',this.good).then(
+                    res=>{
+                        console.log(res)
+                    },
+                    err=>{
+                        console.log(err)
+                    }
+                )
+            }else if(this.text.indexOf('我想买') !== -1 && !this.goodFlag){
+                Dialog.alert({
+                    message: '已经加入购物车了，不能重复加入'
+                }).then(() => {
+                // on close
+                });
+            }
+        }
+    },
+    computed:{
+        index(){
+            return this.$store.state.info.index
         }
     },
 }
 </script>
 
 <style lang='less' scoped>
-
     .textMain{
         ul{
             margin-top: 15px;

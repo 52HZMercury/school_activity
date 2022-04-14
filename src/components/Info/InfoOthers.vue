@@ -92,6 +92,7 @@
                         <!-- <img :src="url+comment.user.headImg" alt=""> -->
                         <el-avatar :size="30" :src="url+comment.user.headImg" class="commentHeadImg"></el-avatar>
                         <p>{{comment.user.name}}</p>: {{comment.commentText}}
+                        <!-- <el-button class="btn" type="danger" icon="el-icon-delete" circle></el-button> -->
                     </li>
                 </ul>
             </div>
@@ -127,6 +128,7 @@ export default {
             desc: '',
             image_url: '',
             share_url:'',
+            id:0
         }
       }
     },
@@ -136,8 +138,9 @@ export default {
             res=>{
                 // let index = this.$store.state.info.index
                 this.commentData = res.data[this.index].comments
-                this.imgSrc = res.data[this.index]
+                // this.imgSrc = res.data[this.index]
                 this.like = res.data[this.index].likes
+                this.id = res.data[this.index].id
                 setTimeout(()=>{
                     this.likes = this.like
                 },1000)
@@ -163,7 +166,7 @@ export default {
             setTimeout(()=>{
                 this.likes++
             },1000)
-            this.$axios.post('/back/updateLikes?dynamicId='+(this.index+1)+'&likes='+this.like)
+            this.$axios.post('/back/updateLikes?dynamicId='+this.id+'&likes='+this.like)
         },
         //like从1-...  ...-1    1-0特殊
         likesUpData(){
@@ -190,7 +193,7 @@ export default {
                 }
             }
             
-            this.$axios.post('/back/updateLikes?dynamicId='+(this.index+1)+'&likes='+this.like)
+            this.$axios.post('/back/updateLikes?dynamicId='+this.id+'&likes='+this.like)
         },
 
         //评论
@@ -200,7 +203,7 @@ export default {
         postComment(){
             let comment = {
                     commentText:this.input,
-                    dynamicId:Number(this.index+1),
+                    dynamicId:this.id,
                     user:{
                         // dynamicSum: 0,
                         // headImg: "string",
@@ -214,11 +217,11 @@ export default {
                     }
                 }
             console.log(comment)
-            console.log(typeof(Number(this.index)))
+            // console.log(Number(this.index))
             this.input = ''
-            this.$axios.get('/back/login?id=123&password=123').then(
-                res=>{
-                    console.log('登录成功'+res)
+            // this.$axios.get('/back/login?id=123&password=123').then(
+            //     res=>{
+            //         console.log('登录成功'+res)
                     this.$axios.post('/back/releaseComment',comment).then(
                     res=>{
                         console.log(res)
@@ -237,11 +240,11 @@ export default {
                         console.log(err);
                     }
                     )   
-                },
-                err=>{
-                    console.log(err)
-                }
-            )
+                // },
+            //     err=>{
+            //         console.log(err)
+            //     }
+            // )
         },
 
             //分享到QQ好友(PC端可用) 

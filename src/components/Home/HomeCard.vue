@@ -27,7 +27,7 @@
         <span class="right" @click="moreInfo(j)">
           <div class="username">{{j.user.name}}</div>
           <div class="time">{{formatTime(j.releasetime)}}</div>
-          <div class="tag">#{{j.tag}}#</div>
+          <div class="tag">{{j.tag}}#</div>
           <div class="text">{{j.descriptiontext}}</div>
           <div class="text-imgs">
             <img :src="j.img" alt="图片信息">
@@ -114,7 +114,7 @@ export default {
   methods:{
     ...mapMutations(['activedId']),
     share () {
-      // console.log('ceshi')
+      console.log('ceshi')
     },
     pick (index, event) {
       if(!this.testDatas[index].flag)
@@ -161,8 +161,7 @@ export default {
   },
   computed: {
     filterCard() {
-      
-      console.log(this.input)
+      const {input, data} = this
       let filterData = [...data]
       if(input.trim()) {
         filterData = this.data.filter((i) => {

@@ -8,14 +8,14 @@
                 <!-- 官方不推荐这么写，所以这里报错了，但是——管他呢 -->
                 <!-- 这是左边 -->
                 <div class="box" v-for="good in goods" :key="good.id" v-if="goods.indexOf(good) % 2 == 0" @click="moreInfo(good)">
-                   <secondHandGoodsCard :good="good" :baseURL="baseURL"></secondHandGoodsCard>
+                    <secondHandGoodsCard :good="good" :baseURL="baseURL"></secondHandGoodsCard>
                 </div>
             </div>
             
             <!-- 右边 -->
             <div class="list list-right">
                 <div class="box" v-for="good in goods" :key="good.id" v-if="goods.indexOf(good) % 2 == 1" @click="moreInfo(good)">
-                     <secondHandGoodsCard :good="good" :baseURL="baseURL"></secondHandGoodsCard>
+                    <secondHandGoodsCard :good="good" :baseURL="baseURL"></secondHandGoodsCard>
                 </div>
             </div>
         </div>

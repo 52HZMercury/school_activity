@@ -1,8 +1,8 @@
 <template>
     <div>
         <!-- <HomeCardMain></HomeCardMain> -->
-        <router-view ></router-view>
-        <HomeCardFooter></HomeCardFooter>
+        <router-view></router-view>
+        <HomeCardFooter class="main"></HomeCardFooter>
         <span class="iconfont" @click="$router.push({name:'HomeCardMain'})" >&#xe605;</span>
         <div class="temp-publish-btn"  @click="$router.push({name:'Publish'})">+</div>
     </div>
@@ -19,6 +19,9 @@ export default {
 </script>
 
 <style scoped>
+.main{
+    margin-top: -10000px;
+}
 .temp-publish-btn {
     position: fixed;
     right: 1rem;

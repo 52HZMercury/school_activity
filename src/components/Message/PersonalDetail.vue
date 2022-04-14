@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <!-- 第一排 用户个人信息-->
+     <!-- 第一排 用户个人信息-->
       <div class="user-info">
         <div class="head-img">
           <img src="../../assets/imgs/logo.png" alt="">
@@ -40,7 +40,7 @@
       <div class="title">我的校园</div>
       <div class="items">
 
-        <div class="item" v-for="i in mySchool" :key="i.name">
+        <div class="item" v-for="(i,index) in mySchool" :key="i.name" @click="mySchoolMethod(index)">
           <div class="item-img">
             <img :src="require('../../assets/imgs/' + i.img)" :alt="i.name">
           </div>
@@ -52,28 +52,30 @@
 
   <!-- 第四排 -->
     <ul class="options">
-      <li v-for="i in options" :key="i.name">
+      <li v-for="(i,index) in options" :key="i.index" @click="optionsMethod(index)">
         <img :src="require('../../assets/imgs/' + i.img)" :alt="i.name">
         <div>{{i.name}}</div>
       </li>
     </ul>
-
+    
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
 <script>
+import { Dialog } from 'vant';
   export default {
     name:'PersonalDetail',
     components:{},
     props:{},
     data(){
       return {
-          // 我的校园 这一板块内的几个功能
           mySchool: [
             {name: '我的动态', img: '我的动态.png'},
             {name: '校园榜单', img: '校园榜单.png'},
             {name: '与我互动', img: 'pick.png'},
             {name: '我的社交', img: '我的闲置.png'},
+            {name: '我的闲置', img: '我的闲置.png'},
             {name: '我的购物', img: '购物车.png'}
           ],
           // 下面的选项
@@ -82,36 +84,52 @@
             {name: '用户协议&隐私说明', img: '用户协议.png', clickEvent: null},
             {name: '切换校区', img: '切换校区.png', clickEvent: null},
             {name: '修改个人资料', img: 'share.png', clickEvent: null},
-            {name: '注销', img: '离开.png', clickEvent: null}
+            {name: '注销', img: '离开.png', clickEvent: "out"},
           ]
       }
     },
-    created(){},
-    mounted(){},
-    activated(){},
-    updated(){},
     methods:{
-      // 考虑到未来可能还会做进一步的模块化，所以这里按照板块顺序进行一个区分
-      // 我的校园 板块内容写在这下面
-
-      // 选项 板块内容写在这下面
-      logout: function () {
-        
+      out(){
+        Dialog.confirm({
+          message: '是否要退出登录'
+        }).then(() => {
+          this.$axios.get('/back/logout').then(
+            res=>{
+              console.log(res)
+            },
+            err=>{
+              console.log(err)
+            }
+          )
+          this.$router.push('/')
+        }).catch(() => {
+          // on cancel
+        });
+      },
+      optionsMethod(index){
+        if(index === 4){
+          this.out()
+        }
+      },
+      mySchoolMethod(index){
+        if(index === 0){
+          this.$router.push({name:'MyIssue'})
+        }else if(index === 5){
+          this.$router.push({name:'MyGoods'})
+        }
       }
     },
-    computed:{},
-    watch:{},
   }
 </script>
 <style scoped>
 .wrapper {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   background-color: #515151;
 }
 .user-info {
   position: relative;
-  width: 100%;
+  /* width: 100%; */
   height: 8vh;
   background-color: #eee;
   display: flex;
@@ -240,8 +258,15 @@ ul {
   font-weight: 500;  
 }
 .options li:not(:last-child) {
+  /* padding-bottom: 100px; */
   border-bottom: 1px solid #4445;
 }
+.options li:last-child {
+  /* padding-bottom: 10px; */
+  margin-bottom: 60px;
+  border-bottom: 1px solid #4445;
+}
+
 
 .options li img {
   height: 5vh;
