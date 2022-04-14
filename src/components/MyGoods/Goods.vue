@@ -42,21 +42,24 @@ export default {
             // sellPrice:'2500',
             // userId:0,
             url: 'http://mercuryblog.site:8080/',
-            good:[]
+            good:[],
+            options:0,
+            urlOption:''
         }
     },
     mounted() {
-        this.dataList()
+        this.options = this.$route.query.options
+        this.choiceList()
     },
     methods: {
-        dataList(){
+        buyGoods(){
             // this.$axios.get('/back/login?id=123&password=123').then(
                 // (res)=>{
                     // console.log(res)
-                    this.good = []
+                    //this.good = []
                     this.$axios.post('/back/getgoods').then(
                         (res)=>{
-                            console.log(res)
+                            // console.log(res)
                             for(let i=0; i < res.data.length; i++){
                                 //不能直接等于 会丧失数据代理
                                 if(res.data[i].isbargain){
@@ -66,27 +69,66 @@ export default {
                                 }
                                 this.good.push(res.data[i])
                             }
-                            console.log(this.good)
+                            // console.log(this.good)
                         },
                         (err)=>{
                             console.log(err)
                         }
                     )
-                },
+        },
                 // (err)=>{
                     // console.log(err)
                 // }
             // )
         // },
+        idleGoods(){
+            this.$axios.post('/back/mygoods').then(
+                (res)=>{
+                    // console.log(res)
+                    for(let i=0; i < res.data.length; i++){
+                        //不能直接等于 会丧失数据代理
+                        if(res.data[i].isbargain){
+                            res.data[i].bargain = '可议价'
+                        }else{
+                            res.data[i].bargain = '不讲价'
+                        }
+                        this.good.push(res.data[i])
+                    }
+                    // console.log(this.good)
+                },
+                (err)=>{
+                    console.log(err)
+                }
+            )
+        },
+        choiceList(){
+            this.good = []
+            if(this.options === 0){
+                this.idleGoods()
+            }else if(this.options === 1){
+                this.buyGoods()
+            }else{
+                alert('出错了')
+            }
+        },
+        choiceDel(){
+            if(this.options === 0){
+                this.urlOption = 'null'
+            }else if(this.options === 1){
+                this.urlOption = 'deletegoods'
+            }else{
+                alert('出错了')
+            }
+        },
         del(id){
             console.log(id)
             Dialog.confirm({
                 // title: '标题',
                 message: '确定要删除嘛？'
             }).then(() => {
-                this.$axios.post('/back/deletegoods?id='+id).then(
+                this.$axios.post('/back/'+this.urlOption+'?id='+id).then(
                     (res)=>{
-                        this.dataList()
+                        this.choiceList()
                         console.log(res)
                     },
                     (err)=>{
@@ -110,6 +152,9 @@ body{
         display: flex;
         position: relative;
         // justify-content: space-between;
+        &:last-child{
+            padding-bottom: 150px;
+        }
         .good-wrapper{
             position: relative;
             width: 80%;
@@ -147,6 +192,7 @@ body{
                     }
                 }
             }
+            
         }
         .btn{
             // display: flex;

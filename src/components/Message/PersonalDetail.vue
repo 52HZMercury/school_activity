@@ -109,13 +109,27 @@ import { Dialog } from 'vant';
       optionsMethod(index){
         if(index === 4){
           this.out()
+        }else if(index === 3){
+          this.$router.push({name:'Revamp'})
         }
       },
       mySchoolMethod(index){
         if(index === 0){
           this.$router.push({name:'MyIssue'})
+        }else if(index === 4){
+          this.$router.push(
+            {
+              name:'MyGoods',
+              query:{options:0}
+            }
+          )
         }else if(index === 5){
-          this.$router.push({name:'MyGoods'})
+          this.$router.push(
+            {
+              name:'MyGoods',
+              query:{options:1}
+            }
+          )
         }
       }
     },

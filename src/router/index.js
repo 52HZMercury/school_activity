@@ -35,11 +35,6 @@ const routes = [
     component: Info
   },
   {
-    path: '/revamp',
-    name: 'Revamp',
-    component: Revamp
-  },
-  {
     path:'/resetpsw',
     name:'ResetPsw',
     component: ResetPsw
@@ -106,7 +101,12 @@ const routes = [
             path:'MyIssue',
             name:'MyIssue',
             component:MyIssue
-          }
+          },
+          {
+            path: 'Revamp',
+            name: 'Revamp',
+            component: Revamp
+          },
         ]
       },
       
