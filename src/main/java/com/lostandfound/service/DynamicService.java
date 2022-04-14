@@ -71,4 +71,8 @@ public class DynamicService {
         dynamicMapper.deleteComment(id);
     }
 
+    public int dogetCommentUserID(int Commentid){
+        return dynamicMapper.getCommentUserID(Commentid);
+    }
+
 }

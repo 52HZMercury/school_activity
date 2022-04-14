@@ -22,7 +22,11 @@
 
 
     <select id="getmysellgoods" resultType="Goods">
-        SELECT * FROM  dynamic WHERE userId = '123' AND tag = '#二手交易'
+        SELECT * FROM  dynamic WHERE userId = #{userid} AND tag = '#二手交易'
     </select>
+
+    <delete id="deletemysellgoods" parameterType="int">
+        delete from dynamic where id = #{id}
+    </delete>
 
 </mapper>

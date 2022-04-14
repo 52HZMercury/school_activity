@@ -93,4 +93,8 @@
         DELETE FROM comments WHERE id = #{id}
     </delete>
 
+    <select id="getCommentUserID" resultType="int">
+        SELECT userId from  comments  WHERE Id = #{Commentid}
+    </select>
+
 </mapper>

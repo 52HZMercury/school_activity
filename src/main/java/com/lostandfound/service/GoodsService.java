@@ -35,4 +35,8 @@ public class GoodsService {
     public List<Goods> dogetmysellgoods(int userid){
        return goodsMapper.getmysellgoods(userid);
     }
+
+    public void  dodeletemysellgoods(int dynamicId){
+        goodsMapper.deletemysellgoods(dynamicId);
+    }
 }

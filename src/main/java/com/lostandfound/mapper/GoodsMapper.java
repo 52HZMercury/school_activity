@@ -22,4 +22,5 @@ public interface GoodsMapper {
 
     List<Goods> getmysellgoods(int userid);
 
+    void deletemysellgoods(int dynamicId);
 }

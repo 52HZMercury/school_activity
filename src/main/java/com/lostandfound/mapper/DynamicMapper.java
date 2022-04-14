@@ -38,4 +38,7 @@ public interface DynamicMapper {
     void deleteDynamic(int id);
 
     void deleteComment(int id);
+
+    int getCommentUserID(int Commentid);
+
 }

@@ -53,4 +53,11 @@ public class GoodsController {
         return  goodsService.dogetmysellgoods((int)session.getAttribute("loginUserId"));
     }
 
+    @PostMapping("/deletemygoods")
+    @ApiOperation("删除我的闲置，即删除发布的二手交易的动态，这里的dynamicId就是闲置物品的Id")
+    public void deletemysellgoods(int dynamicId){
+        goodsService.dodeletemysellgoods(dynamicId);
+    }
+
+
 }
