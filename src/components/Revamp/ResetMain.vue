@@ -27,9 +27,9 @@ export default {
     },
     sure(){
       if(this.newPsw==''||this.surePsw==''){
-        alert('密码不能为空')
+        this.$toast('密码不能为空')
       }else if(this.newPsw!==this.surePsw){
-        alert('两次密码不一样！')
+        this.$toast('两次密码不一样！')
       }else{
         let data = {
           password:this.surePsw,
@@ -41,7 +41,7 @@ export default {
             if(res.status==200){
               this.userMsg.password = this.surePsw
               this.$store.commit('saveUserMsg',this.userMsg)
-              alert('修改成功！请重新登录！')
+              this.$toast('修改成功！请重新登录！')
               this.$router.push('/login')
             }
           }

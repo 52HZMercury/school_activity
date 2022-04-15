@@ -162,6 +162,7 @@ export default {
         name: "",
         password: "",
       },
+      isSuccess:true,
 
       // 图片文件
       file: "",
@@ -222,38 +223,68 @@ export default {
     },
 
     release() {
+        this.users = this.$store.state.userMsg
 
-      this.users = this.$store.state.userMsg
-      
-      let Data = {
-        comments: [],
-        descreptiontext: this.releasetext,
-        id: "",
-        img: this.file.name,
-        invisible: this.hide,
-        likes: 0,
-        realeasetime: "",
-        tag: this.settag,
-        user: this.users,
-      }
-
-      console.log(Data);
-      
-      let formData = new FormData();
-      formData.append("file", this.file); 
-      console.log(this.file);
-      console.log(formData);
-
-      this.$axios.post("/back/add",Data).then((res)=>{
-        console.log(res);
-        if(res.status!== 200){
-          alert("发表动态失败")
+        let Data = {
+          comments: [],
+          descriptiontext: this.releasetext,
+          id: "",
+          // img: this.file.name,
+          img: '',
+          invisible: this.hide,
+          likes: 0,
+          realeasetime: "",
+          tag: this.settag,
+          user: this.users,
         }
-      })
-      this.$axios.post("/back/fileload",formData).then(function(res){
-            console.log(res);
-      })
-    },
+
+        console.log('这是Data', Data);
+
+        let formData = new FormData();
+        formData.append("file", this.file);
+
+        console.log('这是file', this.file);
+        console.log('这是formdata', formData);
+
+        // this.$axios.get()
+
+        this.$axios.post("/back/add", Data).then((res) => {
+          console.log(res);
+          if (res.status !== 200) {
+            // alert("发表动态失败")
+            this.isSuccess=false
+          }
+        })
+
+        if(this.isSuccess){
+          // setTimeout(() => {
+          //   this.$axios.post("/back/fileload", formData).then(function (res) {
+          //     console.log(res);
+          //     if (res.status!==200) {
+          //       // alert('发布成功！')
+          //       // this.$router.push('/home')
+          //       this.isSuccess=false
+          //     }
+          //   })
+          // }, 500)
+          setTimeout(() => {
+            this.$axios.post("/back/fileload", formData).then(function (res) {
+              console.log(res);
+              if (res.status!=200) {
+                // alert('发布成功！')
+                // this.$router.push('/home')
+                this.isSuccess=false
+              }
+            })
+          }, 500)
+          this.isSuccess?this.$toast("发布成功！"):this.$toast('发布失败！请稍后重试！')
+        }else{
+          this.$toast('发布失败！请稍后重试！')
+          console.log('第一个false了');
+        }
+
+        this.$router.push('/Home')
+      },
 
   // 记得删！！！！
     jump(){

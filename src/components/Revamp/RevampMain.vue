@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { Dialog } from 'vant'
 export  default {
   name:"RevampMain",
   data(){
@@ -49,12 +50,21 @@ export  default {
   methods:{
     // 返回
     back(){
+      console.log(this.isChanged);
       if(this.isChanged){
-        if(confirm('有未保存的内容，是否保存?')){
+        Dialog.confirm({
+          title:'',
+          message:'有未保存的内容，是否保存?',
+        }).then(()=>{
           this.finish()
-        }
+          this.$router.go(-1)
+        }).catch(()=>{
+          this.$router.go(-1)
+        })
+      }else{
+        this.$router.go(-1)
       }
-      this.$router.go(-1)
+      
     },
     // 保存
     finish(){
@@ -83,13 +93,27 @@ export  default {
     },
     // 退出登录
     quit(){
-      this.$axios.get('/back/logout?id='+this.userMsg.id).then(
-        (res)=>{
+      Dialog.confirm({
+        title: '',
+        message: '确认退出？'
+      }).then(() => {
+        this.$axios.get('/back/logout?id='+this.userMsg.id).then((res)=>{
           console.log(res);
-        }
-      )
-      // confirm("退出了!")
-      this.$router.push("/login")
+        })
+        // confirm("退出了!")
+        this.$router.push("/login")
+      }).catch({
+
+      })
+
+
+      // this.$axios.get('/back/logout?id='+this.userMsg.id).then(
+      //   (res)=>{
+      //     console.log(res);
+      //   }
+      // )
+      // // confirm("退出了!")
+      // this.$router.push("/login")
     },
     // 数据改变
     valueChanged(){
@@ -98,9 +122,26 @@ export  default {
     revampPsw(){
       this.$router.push('/resetpsw')
     },
-    getNewImg(){
-      this.newImg = this.$refs.file.files[0]
+    getNewImg(e){
+      // this.newImg = this.$refs.file.files[0]
+      // console.log(this.newImg);
+
+      let that = this;
+      let files = e.target.files[0];
+      if (!e || !window.FileReader) return; 
+
+      let reader = new FileReader();
+      reader.readAsDataURL(files);
+
+      reader.onloadend = function () {
+        that.userImg = this.result;
+      }
+
+      this.newImg = e.target.files[0]
       console.log(this.newImg);
+
+      this.isChanged = true
+      console.log(this.isChanged);
     }
   },
   computed:{
@@ -185,7 +226,8 @@ export  default {
   text-align:center;
   height:17px;
   line-height:17px;
-  color:#FFB795
+  color:#FFB795;
+  margin-top:7px
 }
 
 .others{

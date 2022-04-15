@@ -18,7 +18,7 @@ import secondHandChoice from '../components/secondHand/secondHandChoice'
 import secondHandDetail from '../components/secondHand/secondHandDetail'
 import secondHandMain from '../components/secondHand/secondHandMain'
 
-import Message from '../views/Message'
+import Message from '../views/message'
 import PersonalDetail from '../components/Message/PersonalDetail'
 
 import MyGoods from '../views/MyGoods'
