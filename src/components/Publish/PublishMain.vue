@@ -257,16 +257,6 @@ export default {
         })
 
         if(this.isSuccess){
-          // setTimeout(() => {
-          //   this.$axios.post("/back/fileload", formData).then(function (res) {
-          //     console.log(res);
-          //     if (res.status!==200) {
-          //       // alert('发布成功！')
-          //       // this.$router.push('/home')
-          //       this.isSuccess=false
-          //     }
-          //   })
-          // }, 500)
           setTimeout(() => {
             this.$axios.post("/back/fileload", formData).then(function (res) {
               console.log(res);
