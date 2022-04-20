@@ -41,4 +41,6 @@ public interface DynamicMapper {
 
     int getCommentUserID(int Commentid);
 
+    Integer getCommentID(int CommentID);
+
 }

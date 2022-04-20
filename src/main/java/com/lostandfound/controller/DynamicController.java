@@ -86,16 +86,25 @@ public class DynamicController {
     @PostMapping("/deleteComment")
     @ApiOperation("用于删除评论,只需要传入Commentid,删除成功会返回delete success,不能删除会返回can't delete")
     public String deleteComment(int Commentid,HttpSession session){
-        int userID = dynamicService.dogetCommentUserID(Commentid);
 
-        if(userID==(int)session.getAttribute("loginUserId")){
-            dynamicService.doDeleteComment(Commentid);
-            return "delete success";
+        Integer selectCommentId = dynamicService.getCommentID(Commentid);
+
+        if(selectCommentId==null){
+            return "There is something wrong with your Commentid";
         }
+
         else{
-            return "can't delete";
-        }
+            int userID = dynamicService.dogetCommentUserID(Commentid);
 
+            if(userID==(int)session.getAttribute("loginUserId")){
+                dynamicService.doDeleteComment(Commentid);
+                return "delete success";
+            }
+            else{
+                return "can't delete";
+            }
+
+        }
     }
 
 }

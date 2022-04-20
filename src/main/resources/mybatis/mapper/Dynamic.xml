@@ -90,11 +90,16 @@
     </delete>
 
     <delete id="deleteComment" parameterType="int">
-        DELETE FROM comments WHERE id = #{id}
+        DELETE FROM comments WHERE CommentId = #{id}
     </delete>
 
     <select id="getCommentUserID" resultType="int">
-        SELECT userId from  comments  WHERE Id = #{Commentid}
+        SELECT userId from  comments  WHERE CommentId = #{Commentid}
     </select>
+
+    <select id="getCommentID" resultType="Integer">
+        SELECT CommentID  FROM comments where CommentID=#{CommentID}
+    </select>
+
 
 </mapper>
