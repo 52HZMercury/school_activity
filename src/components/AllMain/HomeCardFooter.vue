@@ -37,7 +37,7 @@ export default {
             }else if(id == 3){
                 this.$router.push({name:'Publish'})
             }else if(id == 4){
-
+                this.$router.push({name:'LoseThings'})
             }else if(id == 5){
                 this.$router.push({name:'PersonalDetail'})
             }

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
 <!--    <img alt="Vue logo" src="../assets/logo.png">-->
-    <home-top></home-top>
+    <!-- <home-top></home-top> -->
     <home-card></home-card>
     <!-- 下面这个是临时的,后面删掉 -->
     <!-- <div @click="$router.push({name:'HomeCardMain'})" class="temp-publish-btn">+</div> -->

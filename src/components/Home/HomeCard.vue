@@ -2,7 +2,11 @@
   <div class="wrapper">
     <div class="HomeTop">
       <img src="../../assets/imgs/homeImg.png" alt="HomeTop">
-      <h2>易班信息平台</h2>
+      
+      <slot>
+        <h2 style="text-align:center;">易班信息平台</h2>
+      </slot>
+      
     </div>
 
     <div class="search">
