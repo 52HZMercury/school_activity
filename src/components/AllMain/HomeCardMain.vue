@@ -21,8 +21,7 @@
     </div>
 
   <!-- 走马灯 轮番图 -->
-    <div class="block">
-      <!-- <span class="demonstration">Click 指示器触发</span> -->
+    <!-- <div class="block">
       <el-carousel trigger="click" height="230px">
         <el-carousel-item >
           <img src="../../assets/imgs/信息交互.png" alt="" srcset="">
@@ -37,7 +36,7 @@
           <img src="../../assets/imgs/失物招领.png" alt="" srcset="">
         </el-carousel-item>
       </el-carousel>
-    </div>
+    </div> -->
 
 
     <ul>
@@ -203,7 +202,7 @@ export default {
     width: 100%;
     /* text-align: center; */
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     z-index: 9;
   }

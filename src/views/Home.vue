@@ -23,7 +23,7 @@ export default {
 }
 </script>
 <style scoped>
-.temp-publish-btn {
+/* .temp-publish-btn {
   position: absolute;
   right: 1rem;
   bottom: 1rem;
@@ -35,5 +35,5 @@ export default {
   text-align: center;
   line-height: 4rem;
   border-radius: 50%;
-}
+} */
 </style>

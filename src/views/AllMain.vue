@@ -3,8 +3,8 @@
         <!-- <HomeCardMain></HomeCardMain> -->
         <router-view></router-view>
         <HomeCardFooter class="main"></HomeCardFooter>
-        <span class="iconfont" @click="$router.push({name:'HomeCardMain'})" >&#xe605;</span>
-        <div class="temp-publish-btn"  @click="$router.push({name:'Publish'})">+</div>
+        <!-- <span class="iconfont" @click="$router.push({name:'HomeCardMain'})" >&#xe605;</span> -->
+        <!-- <div class="temp-publish-btn"  @click="$router.push({name:'Publish'})">+</div> -->
     </div>
 </template>
 
