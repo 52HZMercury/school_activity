@@ -31,6 +31,7 @@ public interface UserMapper {
 
     int deleteUser(String id);
 
+    void addheadImgpath(String path,int userId);
 
 
 }

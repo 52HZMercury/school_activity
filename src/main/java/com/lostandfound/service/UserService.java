@@ -53,6 +53,8 @@ public class UserService {
     }
 
 
+
+
     //用户注册
     public int doreg(User user){
           userMapper.addUser(user);
@@ -68,4 +70,8 @@ public class UserService {
         userMapper.upDateUserpassword(upuser);
     }
 
+
+    public void addheadImgPath(String path,int userId){
+          userMapper.addheadImgpath(path,userId);
+    }
 }

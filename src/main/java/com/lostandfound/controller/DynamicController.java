@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -106,5 +107,15 @@ public class DynamicController {
 
         }
     }
+
+
+
+    @PostMapping("/loadDynamicByuserID")
+    @ApiOperation("什么也不需要传，前提是你已经登录")
+    public List<Dynamic> loadDynamicByuserID(HttpSession session){
+
+        return dynamicService.getMyDynamic((int)session.getAttribute("loginUserId"));
+    }
+
 
 }

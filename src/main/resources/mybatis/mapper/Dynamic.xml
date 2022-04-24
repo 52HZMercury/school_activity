@@ -12,6 +12,9 @@
         select * from  dynamic
     </select>
 
+
+
+
     <resultMap id="DynamicAndComments" type="Dynamic">
         <result property="id" column="id"/>
         <association property="user" javaType="User" select="getUser" column="userId"/>
@@ -38,6 +41,11 @@
     </select>
 
 
+    <select id="queryDynamicListByUserid" resultMap="DynamicAndComments">
+        select * from  dynamic  WHERE userId = #{id}
+    </select>
+
+
 <!--    <resultMap id="DynamicAndComments" type="Dynamic">-->
 <!--        <result property="id" column="id"/>-->
 <!--        <association property="user" javaType="User" select="getUser" column="userId"/>-->
@@ -56,9 +64,6 @@
 <!--        select * from comments where dynamicId = #{id}-->
 <!--    </select>-->
 
-    <select id="queryDynamicListByUserid" parameterType="int" resultType="Dynamic">
-        select * from  dynamic  WHERE userId = #{id}
-    </select>
 
 
     <insert id="addDynamic" parameterType="Dynamic">
@@ -100,6 +105,7 @@
     <select id="getCommentID" resultType="Integer">
         SELECT CommentID  FROM comments where CommentID=#{CommentID}
     </select>
+
 
 
 </mapper>

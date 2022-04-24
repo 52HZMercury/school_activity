@@ -79,4 +79,8 @@ public class DynamicService {
         return dynamicMapper.getCommentID(CommentID);
     }
 
+    public List<Dynamic> getMyDynamic(int userID){
+        return dynamicMapper.queryDynamicListByUserid(userID);
+    }
+
 }
