@@ -20,6 +20,7 @@ module.exports = {
                     '^/yb': ''
                 }
             },
-        }
+        },
+        open : true
     }
 }
