@@ -1,7 +1,7 @@
 <template>
   <div class="home">
 <!--    <img alt="Vue logo" src="../assets/logo.png">-->
-    <home-top></home-top>
+    <!-- <home-top></home-top> -->
     <home-card></home-card>
     <!-- 下面这个是临时的,后面删掉 -->
     <!-- <div @click="$router.push({name:'HomeCardMain'})" class="temp-publish-btn">+</div> -->
@@ -23,7 +23,7 @@ export default {
 }
 </script>
 <style scoped>
-.temp-publish-btn {
+/* .temp-publish-btn {
   position: absolute;
   right: 1rem;
   bottom: 1rem;
@@ -35,5 +35,5 @@ export default {
   text-align: center;
   line-height: 4rem;
   border-radius: 50%;
-}
+} */
 </style>

@@ -33,11 +33,11 @@ export default {
             if(id == 1){
                 this.$router.push({name:'secondHandMain'})
             }else if(id == 2){
-                this.$router.push({name:'Home'})
+                this.$router.push({name:'HomeCardMain'})
             }else if(id == 3){
                 this.$router.push({name:'Publish'})
             }else if(id == 4){
-
+                this.$router.push({name:'LoseThings'})
             }else if(id == 5){
                 this.$router.push({name:'PersonalDetail'})
             }

@@ -2,7 +2,11 @@
   <div class="wrapper">
     <div class="HomeTop">
       <img src="../../assets/imgs/homeImg.png" alt="HomeTop">
-      <h2>易班信息平台</h2>
+      
+      <slot>
+        <h2 style="text-align:center;">易班信息平台</h2>
+      </slot>
+      
     </div>
 
     <div class="search">
@@ -202,6 +206,9 @@ export default {
     top: 0;
     background:linear-gradient(45deg,#fff0f1 45%,#ffe1d1);
     border-radius: 0 0 10px 10px;
+    text-align: center;
+    /* display: flex;
+    justify-content: center; */
   }
  /*二级*/
 .search-input{

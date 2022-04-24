@@ -22,6 +22,9 @@ import Message from '../views/Message'
 import PersonalDetail from '../components/Message/PersonalDetail'
 
 import MyGoods from '../views/MyGoods'
+
+import LoseThings from '@/views/LoseThings'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -109,7 +112,11 @@ const routes = [
           },
         ]
       },
-      
+      {
+        path: '/LoseThings',
+        name: 'LoseThings',
+        component: LoseThings
+      }
     ]
   },
   {
