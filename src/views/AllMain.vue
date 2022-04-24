@@ -3,8 +3,8 @@
         <!-- <HomeCardMain></HomeCardMain> -->
         <router-view></router-view>
         <HomeCardFooter class="main"></HomeCardFooter>
-        <!-- <span class="iconfont" @click="$router.push({name:'HomeCardMain'})" >&#xe605;</span> -->
-        <!-- <div class="temp-publish-btn"  @click="$router.push({name:'Publish'})">+</div> -->
+        <span class="iconfont" @click="$router.push({name:'HomeCardMain'})" >&#xe605;</span>
+        <div class="temp-publish-btn"  @click="$router.push({name:'Publish'})">+</div>
     </div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
     width: 3rem;
     height: 3rem;
     color: #fff;
-    background-color: #ff3700;
+    background-color: #e9717f;
     font-size: 3rem;
     text-align: center;
     line-height: 3rem;

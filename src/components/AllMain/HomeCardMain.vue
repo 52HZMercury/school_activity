@@ -184,7 +184,7 @@ export default {
         // console.log(i)
         //保证响应式
         this.data.push(i)
-        this.filterCard.push(i)
+        this.filterCard.unshift(i)
       }
       // console.log(this.data)
     }).catch((err) => {

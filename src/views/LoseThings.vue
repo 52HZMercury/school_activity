@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper">
-        <HomeCard>
+        <HomeCard tag='失物招领'>
             <h2 style="text-align:center;">失物招领</h2>  
         </HomeCard>  
     </div>

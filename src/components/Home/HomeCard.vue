@@ -4,7 +4,7 @@
       <img src="../../assets/imgs/homeImg.png" alt="HomeTop">
       
       <slot>
-        <h2 style="text-align:center;">易班信息平台</h2>
+        <h2 style="text-align:center;">{{tag}}</h2>
       </slot>
       
     </div>
@@ -139,29 +139,67 @@ export default {
       return y+'-'+m+'-'+d+' '+h+':'+mm+':'+s
     },
     moreInfo (targetObj) {
-      console.log(targetObj.id)
-      this.activedId({
-          id: targetObj.id,
-          index: this.data.indexOf(targetObj)
-      })
-      console.log('store:', this.$store.state.info)
-      this.$router.push('/info')
+      this.$axios.get('/back').then(
+            res=>{
+                for (let i = 0; i < res.data.length; i++) {
+                    if(targetObj.id == res.data[i].id){
+                        this.index = i
+                    }
+                }
+                this.activedId({
+                    id: targetObj.id,
+                    index: this.index
+                })
+                console.log('store:', this.$store.state.info)
+                this.$router.push('/info')
+            }
+        )
     }
   },
+  props:['tag'],
   mounted() {
-    this.$axios.get('/back/index').then((res) => {
-      for(let i of res.data) {
-        i.img = this.baseUrl + i.img
-        this.avatar(i)
-        i.imgSrc = this.imgSrc
-        i.anonymous = this.anonymous
-        // console.log(i)
-        //保证响应式
-        this.data.push(i)
-      }
-    }).catch((err) => {
-      console.warn(err)
-    })
+    // console.log(this.tag)
+    // console.log(this.tag.indexOf('#失物招领'))
+    if(this.tag.indexOf('失物招领') !== -1){
+      this.$axios.get('/back/tagDynamic',{
+              params:{
+                  tag: "#失物招领"
+              }
+          }).then((res) => {
+        console.log(res.data)
+        for(let i of res.data) {
+          i.img = this.baseUrl + i.img
+          this.avatar(i)
+          i.imgSrc = this.imgSrc
+          i.anonymous = this.anonymous
+          // console.log(i)
+          //保证响应式
+          this.data.push(i)
+        }
+      }).catch((err) => {
+        console.warn(err)
+      })
+
+    }else{
+      this.$axios.get('/back/tagDynamic',{
+              params:{
+                  tag: "#求助咨询"
+              }
+          }).then((res) => {
+        console.log(res.data)
+        for(let i of res.data) {
+          i.img = this.baseUrl + i.img
+          this.avatar(i)
+          i.imgSrc = this.imgSrc
+          i.anonymous = this.anonymous
+          // console.log(i)
+          //保证响应式
+          this.data.push(i)
+        }
+      }).catch((err) => {
+        console.warn(err)
+      })
+    }
   },
   computed: {
     filterCard() {
@@ -191,8 +229,8 @@ export default {
    font-family: '正楷';
    border: 1px #e3e3e3 solid;
    border-radius: 8px;
-   margin: 10px 2px 0 2px;
-
+   margin: 10px 2px 20px 2px;
+   padding: 30px 0;
  }
   .HomeTop{
     width: 100%;

@@ -2,7 +2,7 @@
   <div class="home">
 <!--    <img alt="Vue logo" src="../assets/logo.png">-->
     <!-- <home-top></home-top> -->
-    <home-card></home-card>
+    <home-card :tag=tag></home-card>
     <!-- 下面这个是临时的,后面删掉 -->
     <!-- <div @click="$router.push({name:'HomeCardMain'})" class="temp-publish-btn">+</div> -->
     <br>
@@ -16,10 +16,19 @@ import HomeTop from "../components/Home/HomeTop";
 
 export default {
   name: 'Home',
+  data() {
+    return {
+      tag:''
+    }
+  },
   components: {
     'home-card': HomeCard,
     'home-top': HomeTop
-  }
+  },
+  mounted() {
+    this.tag = this.$route.query.tag
+    console.log(this.tag)
+  },
 }
 </script>
 <style scoped>

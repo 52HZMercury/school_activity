@@ -34,7 +34,8 @@ import secondHandGoodsCard from '@/components/secondHand/secondHandGoodsCard'
     data(){
       return {
         goods: [],
-        baseURL: 'http://47.96.119.233:8080/'  
+        baseURL: 'http://47.96.119.233:8080/' ,
+        index:0 
       }
     },
     created(){},
@@ -45,7 +46,9 @@ import secondHandGoodsCard from '@/components/secondHand/secondHandGoodsCard'
             }
         }).then((res) => {
             console.log(res.data)
-            this.goods.push(...res.data)
+            for (let i = 0; i < res.data.length; i++) {
+                this.goods.unshift(res.data[i])
+            }
         }).catch((err) => {
             console.warn ('获取二手交易物品信息失败', err)
         })
@@ -56,12 +59,22 @@ import secondHandGoodsCard from '@/components/secondHand/secondHandGoodsCard'
         ...mapMutations(['activedId']),
         moreInfo (targetObj) {
         console.log(targetObj.id)
-        this.activedId({
-          id: targetObj.id,
-          index: this.goods.indexOf(targetObj)
-        })
-        console.log('store:', this.$store.state.info)
-        this.$router.push('/info')
+        
+        this.$axios.get('/back').then(
+            res=>{
+                for (let i = 0; i < res.data.length; i++) {
+                    if(targetObj.id == res.data[i].id){
+                        this.index = i
+                    }
+                }
+                this.activedId({
+                    id: targetObj.id,
+                    index: this.index
+                })
+                console.log('store:', this.$store.state.info)
+                this.$router.push('/info')
+            }
+        )
     }
     },
     computed:{},
