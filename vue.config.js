@@ -2,7 +2,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/back': {
-                target: 'http://47.96.119.233:8080/',
+                target: 'http://mercuryblog.site:8080/',
                 // 允许跨域
                 changeOrigin: true,
                 ws: true,

@@ -44,7 +44,8 @@ export default {
             url: 'http://mercuryblog.site:8080/',
             good:[],
             options:0,
-            urlOption:''
+            urlOption:'',
+            idName:''
         }
     },
     mounted() {
@@ -84,7 +85,7 @@ export default {
         idleGoods(){
             this.$axios.post('/back/mygoods').then(
                 (res)=>{
-                    // console.log(res)
+                    console.log(res)
                     for(let i=0; i < res.data.length; i++){
                         //不能直接等于 会丧失数据代理
                         if(res.data[i].isbargain){
@@ -102,6 +103,7 @@ export default {
             )
         },
         choiceList(){
+            // console.log()
             this.good = []
             if(this.options === 0){
                 this.idleGoods()
@@ -112,10 +114,13 @@ export default {
             }
         },
         choiceDel(){
+            console.log(this.options)
             if(this.options === 0){
-                this.urlOption = 'null'
+                this.urlOption = 'deletemygoods'
+                this.idName = 'dynamicId'
             }else if(this.options === 1){
                 this.urlOption = 'deletegoods'
+                this.idName = 'id'
             }else{
                 alert('出错了')
             }
@@ -126,7 +131,9 @@ export default {
                 // title: '标题',
                 message: '确定要删除嘛？'
             }).then(() => {
-                this.$axios.post('/back/'+this.urlOption+'?id='+id).then(
+                this.choiceDel()
+                console.log(this.idName)
+                this.$axios.post('/back/'+this.urlOption+'?'+this.idName+'='+id).then(
                     (res)=>{
                         this.choiceList()
                         console.log(res)

@@ -124,10 +124,13 @@ export default {
                 brand:this.brand,
                 buyORsale:this.buyORsale,
                 xingHao:this.brandDetail,
+                invisible:true,
+                tag:'#二手交易',
                 releasetime:'',
                 comments:[],
                 id:'',
-                user:{}
+                user:{},
+                descriptiontext:''
             }
             console.log(data)
             // console.log(releasetime)

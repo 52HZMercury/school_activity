@@ -90,8 +90,18 @@
                 <ul>
                     <li v-for="(comment,index) in commentData" :key="index">
                         <!-- <img :src="url+comment.user.headImg" alt=""> -->
-                        <el-avatar :size="30" :src="url+comment.user.headImg" class="commentHeadImg"></el-avatar>
-                        <p>{{comment.user.name}}</p>: {{comment.commentText}}
+                        <div>
+                            <el-avatar :size="30" :src="url+comment.user.headImg" class="commentHeadImg"></el-avatar>
+                            <p>{{comment.user.name}}</p>: {{comment.commentText}}
+                        </div>
+                        <el-button 
+                        class="btn" 
+                        type="danger" 
+                        icon="el-icon-delete" 
+                        circle
+                        @click="delComment(comment)"
+                        >
+                        </el-button>
                         <!-- <el-button class="btn" type="danger" icon="el-icon-delete" circle></el-button> -->
                     </li>
                 </ul>
@@ -102,7 +112,7 @@
 
 <script>
 import 'animate.css'
-
+import { Dialog } from 'vant';
 export default {
     name: 'InfoOthers',
     components:{},
@@ -245,6 +255,32 @@ export default {
             //         console.log(err)
             //     }
             // )
+        },
+        delComment(c){
+            console.log(c)
+            console.log(c.commentId)
+            this.$axios.post('/back/deleteComment?Commentid='+c.commentId).then(
+                res=>{
+                    console.log(res)
+                    if(res.data.indexOf("success") !== -1){
+                        Dialog({ message: '删除成功' });
+                        this.$axios.get('/back').then(
+                            res=>{
+                                console.log(res.data)
+                                // let index = this.$store.state.info.index
+                                this.commentData = res.data[this.index].comments
+                            },
+                            err=>{
+                                console.log(err)
+                            }
+                        )
+                    }else{
+                        Dialog({ 
+                            title:'删除失败',
+                            message: '您不是评论此条的人 不能删除' });
+                    }
+                }
+            )
         },
 
             //分享到QQ好友(PC端可用) 
@@ -418,6 +454,8 @@ export default {
                 // margin-top: -10px;
                 li{
                     margin-bottom: 20px;
+                    display: flex;
+                    justify-content: space-between;
                     // margin-left: 20px;
                 }
                 p{

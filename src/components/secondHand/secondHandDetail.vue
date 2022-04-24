@@ -17,9 +17,12 @@
         <div class="section">
             <div class="secondSection">
                 <i class="iconfont">&#xe615;</i>照片
+                    <!-- 这个name很重要，错了后台接收不到文件，官方是这样解释的 上传的文件字段名 ,实际上就是后端对应的接口参数的名字， --> 
+                    <!-- :http-request="uploadImg" 可以使用自己的函数，覆盖action-->
                 <el-upload
                     action="/back/fileload"
                     list-type="picture-card"
+                    :on-success="up"
                     :on-preview="handlePictureCardPreview"
                     :on-remove="handleRemove">
                     <i class="el-icon-plus"></i>
@@ -27,6 +30,7 @@
                 <el-dialog :visible.sync="dialogVisible">
                     <img width="100%" :src="dialogImageUrl" alt="">
                 </el-dialog>
+                <!-- <van-uploader :after-read="afterRead" v-model="fileList" multiple/> -->
             </div>
         </div>
 
@@ -152,16 +156,43 @@ export default {
             colors: ['#99A9BF', '#F7BA2A', '#FF9900'],  // 等同于 { 2: '#99A9BF', 4: { value: '#F7BA2A', excluded: true }, 5: '#FF9900' }
             texts:['破旧', '85新', '95新', '99新', '全新'],
             textColor:'#8B5A00',
-            save:{}
+            save:{},
+            // fileList: []
         }
     },
     methods: {
+        //自己上传
+        // uploadImg(e) {
+        //     console.log(e)
+        //     let fd = new FormData()
+        //     fd.append('file',e.file)
+        //     console.log(e.file)
+        //     console.log(fd)
+        //     this.$axios.post("/back/fileload",fd).then(
+        //         res => {
+        //             console.log(res)
+        //         },
+        //         err =>{
+        //             console.log(err)
+        //         }
+        //     ).catch(response => {
+        //         console.log('图片上传失败')
+        //     })
+        // },
+
         handleRemove(file, fileList) {
             console.log(file, fileList);
         },
         handlePictureCardPreview(file) {
             this.dialogImageUrl = file.url;
             this.dialogVisible = true;
+            console.log(file);
+        },
+        up(response, file, fileList){
+            console.log(response);
+            console.log(file);
+            console.log(fileList);
+            // this.upload(file)
         },
         back(){
             let saveData = {
@@ -237,13 +268,15 @@ export default {
         this.save = JSON.parse(sessionStorage.getItem('msg')) 
         // console.log(sessionStorage.getItem('msg'))
         // console.log(this.save)
-        this.thingDescribe = this.save.descriptiontext
-        this.grade = this.save.quality
-        this.originalPrice = this.save.originalPrice
-        this.currentPrice = this.save.sellPrice
-        this.bargain = this.save.isbargain
-        this.phone = this.save.user.telnum
-        this.qq = this.save.user.qqnum
+        if(this.save){
+            this.thingDescribe = this.save.descriptiontext 
+            this.grade = this.save.quality
+            this.originalPrice = this.save.originalPrice
+            this.currentPrice = this.save.sellPrice
+            this.bargain = this.save.isbargain
+            this.phone = this.save.user.telnum
+            this.qq = this.save.user.qqnum
+        }
     },
 }
 </script>

@@ -42,7 +42,7 @@
 
     <ul>
       <!--    正式使用的数据-->
-      <li class="home-card" v-for="j in filterCard" :key="filterCard.indexOf(j)">
+      <li class="home-card" v-for="(j,index) in filterCard" :key="index">
         <!--    左边-->
         <span class="left">
           <div class="headImgAll">
@@ -110,7 +110,8 @@ export default {
       baseUrl: 'http://mercuryblog.site:8080/',
       input: '',
       data:[],
-      filterCard:[]
+      filterCard:[],
+      temp:[]
     }
   },
   mixins:[anonymousImg],
@@ -141,13 +142,36 @@ export default {
     searchList(){
       // filterCard
       const {input, data} = this
-      this.filterCard = data
-      if(input.trim()) {
-        this.filterCard = this.data.filter((i) => {
-          return (i.tag.indexOf(input) !== -1)
-              || (i.user.name.indexOf(input) !== -1)
-              || (i.descriptiontext.indexOf(input) !== -1)
+      if(input) {
+        this.temp = data.filter((i) => {
+          // if ((i.tag.indexOf(input) !== -1)
+          //   || (i.user.name.indexOf(input) !== -1)
+          //   || (i.descriptiontext.indexOf(input) !== -1)
+          //   ){
+          //   return true
+          // }
+          var name = i.user.name
+          if(i.tag){
+            if(name){
+              if(i.descriptiontext){
+                return (i.tag.indexOf(input) !== -1)
+                      || (name.indexOf(input) !== -1)
+                      || (i.descriptiontext.indexOf(input) !== -1)
+              }
+              return (i.tag.indexOf(input) !== -1)
+                    || (name.indexOf(input) !== -1)
+            }
+            return (i.tag.indexOf(input) !== -1)
+          }
+          
         })
+                console.log(this.temp)
+        this.filterCard = []
+          console.log(this.filterCard)
+        for(var i in this.temp){
+          this.filterCard.unshift(this.temp[i])
+        }
+        console.log(this.filterCard)
       }
     }
   },
@@ -163,6 +187,7 @@ export default {
         this.data.push(i)
         this.filterCard.push(i)
       }
+      // console.log(this.data)
     }).catch((err) => {
       console.warn(err)
     })
@@ -184,8 +209,8 @@ export default {
    font-family: '正楷';
    border: 1px #e3e3e3 solid;
    border-radius: 8px;
-   margin: 10px 2px 0 2px;
-
+   margin: 10px 2px 0px 2px;
+  padding-bottom: 60px;
  }
   .HomeTop{
     width: 100%;
