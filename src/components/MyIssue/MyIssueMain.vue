@@ -1,5 +1,5 @@
 <template>
-  <div class="outer">
+  <div class="outer" >
     <div class="tab">
       <button class="back" @click='back'>返回</button>
       我的动态
@@ -8,7 +8,7 @@
     <div class="top">
       <div class="userInfo">
         <div class="headPic">
-          <img src="../../assets/imgs/20220303145609.png" alt="">
+          <img :src="'http://47.96.119.233:8080/'+ this.userInfo.headImg" alt="">
         </div>
         <div class="line"></div>
         <div class="else">
@@ -25,113 +25,39 @@
         <MyIssueEmpty v-if="isEmpty"></MyIssueEmpty>
 
         <!-- 单条动态 -->
-        <div class="state">
+        <div class="state" v-for='item in userIssue' :key='item.id'>
           <!-- 单条顶部 -->
           <div class="stateTop">
-            <span class="time">2021-4-1</span>
-            <img src="../../assets/imgs/trash-alt.png" alt="" class="deleteIcon">
+            <span class="time">{{getTimem(item.releasetime)}}</span>
+            <img src="../../assets/imgs/trash-alt.png" alt="" class="deleteIcon" @click='deleteThis(item.id)'>
           </div>
 
           <!-- 主要内容部分 -->
-          <div class="stateMain">
+          <div class="stateMain"  @click.prevent='detailInfo(item.id)'>
             <div class="stateInner">
-              捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个
-            </div>
+              {{item.descriptiontext}} </div>
             <div class="stateImg">
-              <img src="../../assets/imgs/test.jpg" alt="">
+              <img v-if='item.img==""' src="../../assets/imgs/nofindPic.png" alt="">
+              <img :src="'http://47.96.119.233:8080/'+item.img" alt="">
             </div>
-            <span class="stateTag">失物招领</span>
+            <span class="stateTag">{{item.tag}}</span>
           </div>
 
           <br>
 
           <!-- 转评赞部分 -->
-          <div class="zpz">
+          <div class="zpz" @click.prevent='detailInfo(item.id)'>
             <div class="share">
               <img src="../../assets/imgs/share.png" alt="" class="shareIcon">
-              <div>12</div>
+              <div>分享</div>
             </div>
             <div class="commend">
               <img src="../../assets/imgs/commend.png" alt="" class="commendIcon">
-              <div>12</div>
+              <div>{{item.comments.length}}</div>
             </div>
             <div class="pick">
               <img src="../../assets/imgs/pick.png" alt="" class="pickIcon">
-              <div>12</div>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- 单条动态 -->
-        <div class="state">
-          <!-- 单条顶部 -->
-          <div class="stateTop">
-            <span class="time">2021-4-1</span>
-            <img src="../../assets/imgs/trash-alt.png" alt="" class="deleteIcon">
-          </div>
-
-          <!-- 主要内容部分 -->
-          <div class="stateMain">
-            <div class="stateInner">捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个</div>
-            <div class="stateImg">
-              <img src="../../assets/imgs/test2.jpg" alt="">
-            </div>
-            <span class="stateTag">失物招领</span>
-          </div>
-
-          <br>
-
-          <!-- 转评赞部分 -->
-          <div class="zpz">
-            <div class="share">
-              <img src="../../assets/imgs/share.png" alt="" class="shareIcon">
-              <div>12</div>
-            </div>
-            <div class="commend">
-              <img src="../../assets/imgs/commend.png" alt="" class="commendIcon">
-              <div>12</div>
-            </div>
-            <div class="pick">
-              <img src="../../assets/imgs/pick.png" alt="" class="pickIcon">
-              <div>12</div>
-            </div>
-          </div>
-        </div>
-
-
-        <!-- 单条动态 -->
-        <div class="state">
-          <!-- 单条顶部 -->
-          <div class="stateTop">
-            <span class="time">2021-4-1</span>
-            <img src="../../assets/imgs/trash-alt.png" alt="" class="deleteIcon">
-          </div>
-
-          <!-- 主要内容部分 -->
-          <div class="stateMain">
-            <div class="stateInner">捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个捡到这个</div>
-            <div class="stateImg">
-              <img src="../../assets/imgs//test3.jpg" alt="">
-            </div>
-            <span class="stateTag">失物招领</span>
-          </div>
-
-          <br>
-
-          <!-- 转评赞部分 -->
-          <div class="zpz">
-            <div class="share">
-              <img src="../../assets/imgs/share.png" alt="" class="shareIcon">
-              <div>12</div>
-            </div>
-            <div class="commend">
-              <img src="../../assets/imgs/commend.png" alt="" class="commendIcon">
-              <div>12</div>
-            </div>
-            <div class="pick">
-              <img src="../../assets/imgs/pick.png" alt="" class="pickIcon">
-              <div>12</div>
+              <div>{{item.likes}}</div>
             </div>
           </div>
         </div>
@@ -139,29 +65,65 @@
       </div>
     </div>
 
-    <div class="notice">没有了！快去发动态吧~</div>
+    <div v-if="!isEmpty" class="notice">没有了！快去发动态吧~</div>
   </div>
 </template>
 
 <script>
   import MyIssueEmpty from '@/components/MyIssue/MyIssueEmpty.vue'
+  import { Dialog } from 'vant'
 
   export default {
-
-
     name: "MyIssueMain",
     data() {
       return {
         isEmpty: false,
         userInfo: '',
         userName: '',
-        userIntroduce: ''
+        userIntroduce: '',
+        userIssue:''
       }
     },
     methods: {
       back() {
         this.$router.go(-1)
-      }
+      },
+      getTimem(time){
+        let Time=new Date(time)
+        return Time.getFullYear()+'-'+(Time.getMonth()+1)+'-'+Time.getDate()
+      },
+      deleteThis(id){
+        console.log(id);
+        Dialog.confirm({
+          title: '',
+          message: '确认删除这条动态？'
+        }).then(() => {
+          this.$axios.post('/back/deleteDynamic?id='+id).then(res=>{
+            console.log(res);
+            this.$axios.post('/back/loadDynamicByuserID').then(res=>{
+              console.log('res',res);
+              this.userIssue=res.data
+              console.log('userIssue',this.userIssue);
+              if(res.data==0){
+                this.isEmpty=true
+              }
+            })
+          })
+        }).catch({
+
+        })
+        
+      },
+      detailInfo(id){
+        console.log(id);
+        let data={
+          id:id,
+          index:-1
+        }
+        this.$store.commit('activedId',data)
+        this.$router.push('/Info')
+        // this.$store.commit('saveUserMsg',this.data)
+      },
     },
     components: {
       MyIssueEmpty
@@ -171,6 +133,18 @@
       console.log(this.userInfo);
       this.userName = this.userInfo.name
       this.userIntroduce = this.userInfo.introduction
+
+      console.log(this.userInfo.id);
+
+      this.$axios.post('/back/loadDynamicByuserID').then(res=>{
+        console.log('res',res);
+        this.userIssue=res.data
+        this.userIssue.reverse()
+        console.log('userIssue',this.userIssue);
+        if(res.data==0){
+          this.isEmpty=true
+        }
+      })
     }
   }
 </script>
@@ -210,7 +184,7 @@
     width: 90px;
     overflow: hidden;
     border-bottom: 2px solid #ccc;
-    margin-top: 20%;
+    margin-top: 59px;
     margin-left: 7%;
   }
 
@@ -256,7 +230,7 @@
   }
 
   .bottom {
-    margin-top: 20px;
+    margin-top: 5px;
     /* border-top: #ddd solid 2px; */
     border-radius: 30px 30px 0 0;
     box-shadow: 0px -5px 200px 40px rgb(243, 223, 223);
@@ -276,7 +250,7 @@
     padding-left: 5%;
     padding-right: 5%;
     margin-bottom: 15px;
-    box-shadow: 0 2px 9px#ccc;
+    box-shadow: 0 2px 9px #ccc;
   }
 
   .stateTop {
@@ -286,6 +260,7 @@
 
   .deleteIcon {
     margin-left: 70%;
+    display:inline;
   }
 
   .stateMain {
@@ -304,10 +279,16 @@
 
   .stateImg {
     margin: 10px 0 10px 5%;
+    width: 80%;
+    height: 120px;
+    overflow:hidden;
+    /* box-shadow:0 0 30px 20px #000 inset; */
+    box-shadow: 0 2px 20px #bbb; /*下边阴影*/
   }
 
   .stateImg img {
-    height: 120px;
+    /* height: 120px; */
+    width: 100%;
   }
 
   .stateTag {
@@ -328,6 +309,10 @@
     justify-content: space-around;
   }
 
+  .share,.commend,.pick{
+    text-align:center;
+  }
+
   .shareIcon,
   .commendIcon,
   .pickIcon,
@@ -337,7 +322,7 @@
 
   .notice {
     margin-top: 20px;
-    margin-bottom: 20px;
+    padding-bottom: 70px;
     color: rgb(241, 163, 163);
     text-align: center;
   }

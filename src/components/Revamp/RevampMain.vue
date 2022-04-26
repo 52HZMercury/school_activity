@@ -9,7 +9,8 @@
 
     <!-- 换头像 -->
     <div class="photoChange">
-      <div class="photoContainner" @click="$refs.file.click()" :style="[{'background-image':`url(${this.userImg})`}]">
+      <div class="photoContainner" @click="$refs.file.click()" :style="[{'background-image':`url(${this.userImg})`},{'background-position':'center'},{  'background-repeat':'no-repeat'},{
+  'background-size':'cover'}]">
         <img src="@/assets/imgs/photo.png" class="photo">
         <input type="file" hidden ref="file" class="inputPhoto" @change="getNewImg">
       </div>
@@ -44,7 +45,8 @@ export  default {
       userImg:'',
       userMsg:'123',
       isChanged:false,
-      newImg:''
+      newImg:'',
+      myIssue:''
     }
   },
   methods:{
@@ -68,6 +70,8 @@ export  default {
     },
     // 保存
     finish(){
+      if(this.isChanged==false)
+      return
       // console.log(this.newImg);
       let data={
         id:this.userMsg.id,
@@ -87,9 +91,20 @@ export  default {
           }
         }
       )
+      let formData=new FormData()
+      formData.append('file',this.newImg)
+      if(this.newImg){
+        this.$axios.post('/back/headImgload',formData).then((res)=>{
+          console.log(res);
+          this.$axios.get('/back/userindex').then(res=>{
+            console.log('新信息',res);
+            this.$store.commit('saveUserMsg',res.data)
+          })
+        })
+      }
 
       this.isChanged = false
-      alert(this.values[0])
+      this.$toast('保存成功！')
     },
     // 退出登录
     quit(){
@@ -152,7 +167,7 @@ export  default {
   created(){
     this.userMsg = this.$store.state.userMsg
     let getMsg =  [this.userMsg.name,this.userMsg.introduction,this.userMsg.qqnum,this.userMsg.telnum]
-    
+
     for(let i = 0;i<4;i++){
       if(getMsg[i]!=null)
       this.values[i] = getMsg[i]
@@ -160,6 +175,10 @@ export  default {
 
     this.userImg ='http://47.96.119.233:8080/'+ this.userMsg.headImg
     console.log(this.userMsg.headImg);
+
+    // /loadDynamicByuserID
+
+   
   }
 }
 </script>

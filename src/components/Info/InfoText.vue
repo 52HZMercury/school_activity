@@ -32,17 +32,35 @@
     },
     created(){},
     mounted(){
-        this.$axios.get('/back').then(
-            res=>{
-                let index = this.$store.state.info.index
-                this.tag = res.data[index].tag
-                this.text = res.data[index].descriptiontext
-                this.imgSrc = this.url+res.data[index].img
-            },
-            err=>{
-                console.log(err);
-            }
-        )
+        console.log(this.$store.state.info.index);
+        console.log(this.$store.state.info.id);
+        if(this.$store.state.info.index==-1){
+            this.$axios.post('/back/loadDynamicByuserID').then(res=>{
+                console.log(res);
+                    for(let i=0;i<res.data.length;i++){
+                        if(res.data[i].id==this.$store.state.info.id){
+                            this.tag=res.data[i].tag
+                            this.text=res.data[i].descriptiontext
+                            this.imgSrc=this.url+res.data[i].img
+                            break
+                        }
+                    }
+                // }
+            })
+        }else{
+            this.$axios.get('/back').then(
+                res=>{
+                    let index = this.$store.state.info.index
+                    this.tag = res.data[index].tag
+                    this.text = res.data[index].descriptiontext
+                    this.imgSrc = this.url+res.data[index].img
+                },
+                err=>{
+                    console.log(err);
+                }
+            )
+        }
+        
     },
     activated(){},
     updated(){},

@@ -27,7 +27,22 @@ import secondHandInfo from '../components/secondHand/secondHandInfo.vue'
       }
     },
     mounted() {
-      this.$axios.get('/back').then(
+      if(this.$store.state.info.index==-1){
+        this.$axios.post('/back/loadDynamicByuserID').then(res=>{
+          console.log(res);
+          for(let i=0;i<res.data.length;i++){
+            if(res.data[i].id==this.$store.state.info.id){
+              if(res.data[i].tag.indexOf('二手交易') !== -1){
+                  this.flag =  true
+                }else{
+                  this.flag =  false
+                }
+                break
+            }
+          }
+        })
+      }else{
+        this.$axios.get('/back').then(
               res=>{
                 // console.log(res.data[this.index].tag)
                 // console.log(res.data[this.index].tag.indexOf('二手交易'))
@@ -41,6 +56,8 @@ import secondHandInfo from '../components/secondHand/secondHandInfo.vue'
                   console.log(err);
               }
           )
+      }
+      
     },
     computed:{
         index(){

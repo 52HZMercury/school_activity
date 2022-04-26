@@ -144,26 +144,52 @@ export default {
     },
     created(){},
     mounted(){
-        this.$axios.get('/back').then(
-            res=>{
-                // let index = this.$store.state.info.index
-                this.commentData = res.data[this.index].comments
-                // this.imgSrc = res.data[this.index]
-                this.like = res.data[this.index].likes
-                this.id = res.data[this.index].id
-                setTimeout(()=>{
-                    this.likes = this.like
-                },1000)
+        if(this.$store.state.info.index==-1){
+            this.$axios.post('/back/loadDynamicByuserID').then(res=>{
+                console.log(res);
+                    for(let i=0;i<res.data.length;i++){
+                        if(res.data[i].id==this.$store.state.info.id){
+                            // let index = this.$store.state.info.index
+                            this.commentData = res.data[i].comments
+                            // this.imgSrc = res.data[this.index]
+                            this.like = res.data[i].likes
+                            this.id = res.data[i].id
+                            setTimeout(()=>{
+                                this.likes = this.like
+                            },1000)
 
-                this.share.title = res.data[this.index].tag
-                this.share.desc = res.data[this.index].descriptiontext
-                this.share.image_url = this.url+res.data[this.index].img
-                this.share.share_url = '买了服务器网页的地址'
-            },
-            err=>{
-                console.log(err);
-            }
-        )
+                            this.share.title = res.data[i].tag
+                            this.share.desc = res.data[i].descriptiontext
+                            this.share.image_url = this.url+res.data[i].img
+                            this.share.share_url = '买了服务器网页的地址'
+                        }
+                    }
+                // }
+            })
+        }else{
+            this.$axios.get('/back').then(
+                res=>{
+                    // let index = this.$store.state.info.index
+                    this.commentData = res.data[this.index].comments
+                    // this.imgSrc = res.data[this.index]
+                    this.like = res.data[this.index].likes
+                    this.id = res.data[this.index].id
+                    setTimeout(()=>{
+                        this.likes = this.like
+                    },1000)
+
+                    this.share.title = res.data[this.index].tag
+                    this.share.desc = res.data[this.index].descriptiontext
+                    this.share.image_url = this.url+res.data[this.index].img
+                    this.share.share_url = '买了服务器网页的地址'
+                },
+                err=>{
+                    console.log(err);
+                }
+            )
+        }
+
+        
                 // alert(this.index)
     },
     activated(){},
@@ -235,16 +261,29 @@ export default {
                     this.$axios.post('/back/releaseComment',comment).then(
                     res=>{
                         console.log(res)
-                        this.$axios.get('/back').then(
-                            res=>{
-                                console.log(res.data)
-                                // let index = this.$store.state.info.index
-                                this.commentData = res.data[this.index].comments
-                            },
-                            err=>{
-                                console.log(err)
-                            }
-                        )
+
+                        if(this.$store.state.info.index==-1){
+                            this.$axios.post('/back/loadDynamicByuserID').then(res=>{
+                                console.log('发布评论的res',res);
+                                for(let i=0;i<res.data.length;i++){
+                                    if(res.data[i].id==this.$store.state.info.id){
+                                        this.commentData=res.data[i].comments
+                                    }
+                                }
+                            })
+                        }else{
+                            this.$axios.get('/back').then(
+                                res=>{
+                                    console.log(res.data)
+                                    // let index = this.$store.state.info.index
+                                    this.commentData = res.data[this.index].comments
+                                },
+                                err=>{
+                                    console.log(err)
+                                }
+                            )
+                        }
+                        
                     },
                     err=>{
                         console.log(err);
@@ -264,16 +303,29 @@ export default {
                     console.log(res)
                     if(res.data.indexOf("success") !== -1){
                         Dialog({ message: '删除成功' });
-                        this.$axios.get('/back').then(
-                            res=>{
-                                console.log(res.data)
-                                // let index = this.$store.state.info.index
-                                this.commentData = res.data[this.index].comments
-                            },
-                            err=>{
-                                console.log(err)
-                            }
-                        )
+                        if(this.$store.state.info.index==-1){
+                            this.$axios.post('/back/loadDynamicByuserID').then(res=>{
+                                console.log('删除评论的res',res);
+                                for(let i=0;i<res.data.length;i++){
+                                    if(res.data[i].id==this.$store.state.info.id){
+                                        this.commentData=res.data[i].comments
+                                        console.log('commentdata',this.commentData);
+                                    }
+                                }
+                            })
+                        }else{
+                            this.$axios.get('/back').then(
+                                res=>{
+                                    console.log(res.data)
+                                    // let index = this.$store.state.info.index
+                                    this.commentData = res.data[this.index].comments
+                                },
+                                err=>{
+                                    console.log(err)
+                                }
+                            )
+                        }
+                        
                     }else{
                         Dialog({ 
                             title:'删除失败',

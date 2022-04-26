@@ -3,9 +3,9 @@
      <!-- 第一排 用户个人信息-->
       <div class="user-info">
         <div class="head-img">
-          <img src="../../assets/imgs/logo.png" alt="">
+          <img :src="headImg" alt="">
           <div class="name-and-pos">
-            <div class="name">张三</div>
+            <div class="name">{{userName}}</div>
             <div class="pos">西南石油大学成都校区</div>
           </div>
         </div>
@@ -85,7 +85,10 @@ import { Dialog } from 'vant';
             {name: '切换校区', img: '切换校区.png', clickEvent: null},
             {name: '修改个人资料', img: 'share.png', clickEvent: null},
             {name: '注销', img: '离开.png', clickEvent: "out"},
-          ]
+          ],
+          baseUrl:'http://mercuryblog.site:8080/',
+          headImg:'',
+          userName:'',
       }
     },
     methods:{
@@ -133,6 +136,10 @@ import { Dialog } from 'vant';
         }
       }
     },
+    mounted(){
+      this.userName=this.$store.state.userMsg.name
+      this.headImg=this.baseUrl+this.$store.state.userMsg.headImg
+    }
   }
 </script>
 <style scoped>

@@ -47,24 +47,40 @@ import Back from '../Common/Back.vue'
     },
     created(){},
     mounted(){
-        this.$axios.get('/back').then(
-            res=>{
-                // console.log(res.data);
-                let index = this.$store.state.info.index
-                // console.log(!res.data[index].invisible);
-                this.avatar(res.data[index])
-                // if(!res.data[index].invisible){
-                //     this.imgSrc = this.url+res.data[index].user.headImg
-                // }else{
-                //     this.anonymous = '#'+this.anonymousArr[Math.floor(Math.random() * 20 )]
+        if(this.$store.state.info.index==-1){
+            this.$axios.post('/back/loadDynamicByuserID').then(res=>{
+                console.log(res);
+                    for(let i=0;i<res.data.length;i++){
+                        if(res.data[i].id==this.$store.state.info.id){
+                            this.avatar(res.data[i])
+                            this.userName = res.data[i].user.name
+                            this.userTime = dayjs(res.data[i].releasetime).format('YYYY-MM-DD HH:mm:ss')
+                            break
+                        }
+                    }
                 // }
-                this.userName = res.data[index].user.name
-                this.userTime = dayjs(res.data[index].releasetime).format('YYYY-MM-DD HH:mm:ss')
-            },
-            err=>{
-                console.log(err)
-            }
-        )
+            })
+        }else{
+            this.$axios.get('/back').then(
+                res=>{
+                    // console.log(res.data);
+                    let index = this.$store.state.info.index
+                    // console.log(!res.data[index].invisible);
+                    this.avatar(res.data[index])
+                    // if(!res.data[index].invisible){
+                    //     this.imgSrc = this.url+res.data[index].user.headImg
+                    // }else{
+                    //     this.anonymous = '#'+this.anonymousArr[Math.floor(Math.random() * 20 )]
+                    // }
+                    this.userName = res.data[index].user.name
+                    this.userTime = dayjs(res.data[index].releasetime).format('YYYY-MM-DD HH:mm:ss')
+                },
+                err=>{
+                    console.log(err)
+                }
+            )
+        }
+        
     },
     activated(){},
     updated(){},
