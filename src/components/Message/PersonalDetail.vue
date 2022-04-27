@@ -139,6 +139,9 @@ import { Dialog } from 'vant';
     mounted(){
       this.userName=this.$store.state.userMsg.name
       this.headImg=this.baseUrl+this.$store.state.userMsg.headImg
+      // this.$axios.post('/back/userindex').then(res=>{
+      //   console.log(res);
+      // })
     }
   }
 </script>

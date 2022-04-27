@@ -29,7 +29,7 @@
         </span>
         <!--    右边-->
         <span class="right" @click="moreInfo(j)">
-          <div class="username">{{j.user.name}}</div>
+          <div class="username">{{j.invisible?'匿名小可爱':j.user.name}}</div>
           <div class="time">{{formatTime(j.releasetime)}}</div>
           <div class="tag">{{j.tag}}#</div>
           <div class="text">{{j.descriptiontext}}</div>
@@ -285,8 +285,9 @@ export default {
    border-radius: 5rem;
  }
  .right .text-imgs{
-   display: flex;
-   flex-wrap: wrap;
+   /* display: flex;
+   flex-wrap: wrap; */
+   width: 80%;
  }
  .username, .text, .tag{
    font-weight: 600;

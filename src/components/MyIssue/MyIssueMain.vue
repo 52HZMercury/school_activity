@@ -259,7 +259,7 @@
   }
 
   .deleteIcon {
-    margin-left: 70%;
+    margin-left: 65%;
     display:inline;
   }
 

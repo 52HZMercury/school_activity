@@ -61,10 +61,10 @@ export default {
 </script>
 
 <style scoped>
-    .footerWrapper{
+    .footerWrapper {
         position:fixed;
         bottom: 0px;
-        width: 100%;
+        width: 100vw;
         display:flex;
         justify-content: space-around;
         background-color: white;
