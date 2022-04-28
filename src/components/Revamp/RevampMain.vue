@@ -87,7 +87,11 @@ export  default {
         (res)=>{
           console.log(res);
           if(res.status==200){
-            this.$store.commit('saveUserMsg',data)
+            // this.$store.commit('saveUserMsg',res.data)
+            this.$axios.get('/back/userindex').then(res=>{
+              console.log(res);
+              this.$store.commit('saveUserMsg',res.data)
+            })
           }
         }
       )
