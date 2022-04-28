@@ -258,6 +258,12 @@ export default {
                             }
                         }
                     )
+
+                    this.$axios.post('/back/userAlter',data.user).then(
+                        (res)=>{
+                            console.log(res);
+                        }
+                    )
                     this.$router.push({name:'HomeCardMain'})
                 },500)
 

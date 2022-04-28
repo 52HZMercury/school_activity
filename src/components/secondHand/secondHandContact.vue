@@ -27,9 +27,11 @@ export default {
     mounted() {
         this.$axios.get('/back').then(
             res=>{
-                console.log(res.data[44])
-                this.phone = res.data[44].user.telnum
-                this.qq = res.data[44].user.qqnum
+                console.log(res.data[this.index])
+                console.log(res.data[this.index].user.telnum)
+                console.log(res.data[this.index])
+                this.phone = res.data[this.index].user.telnum
+                this.qq = res.data[this.index].user.qqnum
             },
             err=>{
                 console.log(err)
@@ -47,8 +49,13 @@ export default {
             clipboard.on('error', function () {
                 that.$message.error('复制失败');
             });
-            },
+        },
+    },
+    computed:{
+        index(){
+            return this.$store.state.info.index
         }
+    },
 }
 </script>
 
