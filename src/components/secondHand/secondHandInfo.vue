@@ -84,13 +84,13 @@ export default {
                 // this.thingsTag.splice() = res.data[44]
                 if(res.data[this.index].buyORsale){
                     this.buyORsale = '出售'
-                    this.text = '我想卖'
-                    this.origin = '我想卖'
+                    this.text = '我想买'
+                    this.origin = '我想买'
                     // console.log(this.buyORsale)
                 }else{
                     this.buyORsale = '需求'
-                    this.text = '我想买'
-                    this.origin = '我想买'
+                    this.text = '我想卖'
+                    this.origin = '我想卖'
                 }
                 if(res.data[this.index].isbargain){
                     this.bargain = '可议价'
