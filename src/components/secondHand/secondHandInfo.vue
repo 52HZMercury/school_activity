@@ -66,6 +66,8 @@ export default {
             originalPrice:'100',
             sellPrice:'50',
             xingHao:'',
+            id:0,
+            likes:0,
             contact:false,
             thingsTag:['出售','10新','自行车'],
             // index:45,
@@ -102,6 +104,8 @@ export default {
                 this.thingsTag.splice(2,1,res.data[this.index].brand)
                 this.originalPrice = res.data[this.index].originalPrice
                 this.sellPrice = res.data[this.index].sellPrice
+                this.id = res.data[this.index].id
+                this.likes = res.data[this.index].likes
 
                 this.good.brand = res.data[this.index].brand
                 this.good.description = res.data[this.index].descriptiontext
@@ -142,6 +146,8 @@ export default {
                         console.log(err)
                     }
                 )
+                this.likes++
+                this.$axios.post('/back/updateLikes?dynamicId='+this.id+'&likes='+this.likes)
             }else if(this.text.indexOf('我想买') !== -1 && !this.goodFlag){
                 Dialog.alert({
                     message: '已经加入购物车了，不能重复加入'
