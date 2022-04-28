@@ -264,6 +264,8 @@ export default {
                             console.log(res);
                         }
                     )
+
+                    sessionStorage.setItem('sendFlag',JSON.stringify("true"))
                     this.$router.push({name:'HomeCardMain'})
                 },500)
 

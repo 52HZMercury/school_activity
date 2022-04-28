@@ -93,8 +93,22 @@ export default {
                 {font:'\ue734',brand:'书籍'},
                 {font:'\ue651',brand:'数码产品'},
             ],
-            url:'http://mercuryblog.site:8080/'
+            url:'http://mercuryblog.site:8080/',
+            sendFlag:true,
         }
+    },
+    mounted() {
+        this.sendFlag = JSON.parse(sessionStorage.getItem('sendFlag'))
+        if(this.sendFlag == 'false'){
+            // alert(111)
+            setTimeout(()=>{
+                console.log('haol')
+                sessionStorage.setItem('sendFlag',JSON.stringify("true"))
+                this.sendFlag = JSON.parse(sessionStorage.getItem('sendFlag'))
+            },30000)
+        }
+        console.log(JSON.parse(sessionStorage.getItem('sendFlag')));
+        console.log(this.sendFlag);
     },
     methods: {
         sellThing(){
@@ -140,20 +154,29 @@ export default {
                     
             //     }
             // )
-            this.$axios.post('/back/add',data).then(
-                (res)=>{
-                console.log(res);
-                if(res.status!== 200){
-                    alert("发表动态失败")
-                }
-            })
+            console.log(this.sendFlag);
+            if(this.sendFlag == 'true'){
+                this.$axios.post('/back/add',data).then(
+                    (res)=>{
+                    console.log(res);
+                    this.sendFlag = false
+                    sessionStorage.setItem('sendFlag',JSON.stringify("false"))
+                    console.log(JSON.parse(sessionStorage.getItem('sendFlag')));
+                    // console.log(this.sendFlag);
+                    if(res.status!== 200){
+                        alert("发表动态失败")
+                    }
+                })
+                
+            }else{
+                console.log("546546446")
+            }
             setTimeout(()=>{
                 this.$router.push({name:'secondHandDetail'})
                 // this.$router.push({name:'secondHandChoice'})
             },500)
         }
     },
-    
 }
 </script>
 
