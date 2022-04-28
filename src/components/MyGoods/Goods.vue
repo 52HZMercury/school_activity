@@ -3,9 +3,9 @@
         <Back></Back>
         <ul>
             <li v-for="(g,index) in good" :key="index" class="good-Item">
-                <div class="good-wrapper">
+                <div class="good-wrapper" @click="goInfo(g)">
                     <div class="first">
-                        <span><i>{{g.brand}}</i>：{{g.describe}}</span>
+                        <span><i>{{g.brand}}</i>：{{g.description}}</span>
                     </div>
                     <div class="second">
                         <span class="price">{{g.sellPrice}} <i>{{g.originalPrice}}</i></span> 
@@ -27,6 +27,7 @@
 
 <script>
 import { Dialog } from 'vant';
+import { mapMutations } from 'vuex'
 import Back from '../Common/Back.vue'
 export default {
     name:'Goods',
@@ -49,7 +50,8 @@ export default {
         }
     },
     mounted() {
-        this.options = this.$route.query.options
+        this.options = this.$route.query.options || this.options
+        console.log(this.$route.query.options)
         this.choiceList()
     },
     methods: {
@@ -60,7 +62,7 @@ export default {
                     //this.good = []
                     this.$axios.post('/back/getgoods').then(
                         (res)=>{
-                            // console.log(res)
+                            console.log(res)
                             for(let i=0; i < res.data.length; i++){
                                 //不能直接等于 会丧失数据代理
                                 if(res.data[i].isbargain){
@@ -68,7 +70,7 @@ export default {
                                 }else{
                                     res.data[i].bargain = '不讲价'
                                 }
-                                this.good.push(res.data[i])
+                                this.good.unshift(res.data[i])
                             }
                             // console.log(this.good)
                         },
@@ -93,7 +95,7 @@ export default {
                         }else{
                             res.data[i].bargain = '不讲价'
                         }
-                        this.good.push(res.data[i])
+                        this.good.unshift(res.data[i])
                     }
                     // console.log(this.good)
                 },
@@ -103,11 +105,12 @@ export default {
             )
         },
         choiceList(){
-            // console.log()
+            // console.log(this.options)
             this.good = []
-            if(this.options === 0){
+            if(this.options == 0){
+                // alert(1)
                 this.idleGoods()
-            }else if(this.options === 1){
+            }else if(this.options == 1){
                 this.buyGoods()
             }else{
                 alert('出错了')
@@ -115,10 +118,10 @@ export default {
         },
         choiceDel(){
             console.log(this.options)
-            if(this.options === 0){
+            if(this.options == 0){
                 this.urlOption = 'deletemygoods'
                 this.idName = 'dynamicId'
-            }else if(this.options === 1){
+            }else if(this.options == 1){
                 this.urlOption = 'deletegoods'
                 this.idName = 'id'
             }else{
@@ -146,6 +149,25 @@ export default {
             }).catch(() => {
             // on cancel
             });
+        },
+        ...mapMutations(['activedId']),
+        goInfo(targetObj){
+            console.log(targetObj)
+            this.$axios.get('/back').then(
+            res=>{
+                for (let i = 0; i < res.data.length; i++) {
+                    if(targetObj.id == res.data[i].id){
+                        this.index = i
+                    }
+                }
+                this.activedId({
+                    id: targetObj.id,
+                    index: this.index
+                })
+                console.log('store:', this.$store.state.info)
+                this.$router.push('/info')
+            }
+        )
         }
     },
 }

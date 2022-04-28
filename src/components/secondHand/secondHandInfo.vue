@@ -104,7 +104,7 @@ export default {
                 this.sellPrice = res.data[this.index].sellPrice
 
                 this.good.brand = res.data[this.index].brand
-                this.good.describe = res.data[this.index].describe
+                this.good.description = res.data[this.index].descriptiontext
                 this.good.id = res.data[this.index].id
                 this.good.isbargain = res.data[this.index].isbargain
                 this.good.originalPrice = res.data[this.index].originalPrice

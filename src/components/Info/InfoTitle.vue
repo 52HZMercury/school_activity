@@ -53,7 +53,12 @@ import Back from '../Common/Back.vue'
                     for(let i=0;i<res.data.length;i++){
                         if(res.data[i].id==this.$store.state.info.id){
                             this.avatar(res.data[i])
-                            this.userName = res.data[i].user.name
+                            if(!res.data[i].invisible){
+                                this.userName = res.data[i].user.name
+                            }else{
+                                this.userName = '匿名小可爱'
+                                console.log(this.userName)
+                            }
                             this.userTime = dayjs(res.data[i].releasetime).format('YYYY-MM-DD HH:mm:ss')
                             break
                         }
@@ -72,7 +77,11 @@ import Back from '../Common/Back.vue'
                     // }else{
                     //     this.anonymous = '#'+this.anonymousArr[Math.floor(Math.random() * 20 )]
                     // }
-                    this.userName = res.data[index].user.name
+                    if(!res.data[index].invisible){
+                        this.userName = res.data[index].user.name
+                    }else{
+                        this.userName = '匿名小可爱'
+                    }
                     this.userTime = dayjs(res.data[index].releasetime).format('YYYY-MM-DD HH:mm:ss')
                 },
                 err=>{

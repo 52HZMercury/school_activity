@@ -124,7 +124,7 @@ export default {
                 brand:this.brand,
                 buyORsale:this.buyORsale,
                 xingHao:this.brandDetail,
-                invisible:true,
+                invisible:false,
                 tag:'#二手交易',
                 releasetime:'',
                 comments:[],
